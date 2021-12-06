@@ -6,7 +6,7 @@ use PDO;
 use Exception;
 
 /**
- * Products
+ * Products model
  */
 class Products
 {
