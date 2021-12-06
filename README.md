@@ -1,4 +1,4 @@
-# Market Expert (PHP REST API and React + Material UI)
+# Market Expert (REST API PHP and React + Material UI)
 This is a demonstration of using React + Material UI and a REST API backend made in pure PHP with PostgreSQL database.
 
 ## Developer
@@ -25,9 +25,10 @@ CREATE DATABASE marketexpert
 Download the [dump](https://github.com/felipeflfranca/market-expert/raw/main/resources/marketexpert.dump) (database backup)
 
 
-Restore from dump (backup) using the following command:
+Restore from dump (backup) using the following command:\
+**Note:** Replace "{file_path}" with the path to the file on your computer
 ```
-.\pg_restore -U postgres -W -d marketexpert marketexpert.dump;
+.\pg_restore -U postgres -W -d marketexpert {file_path}marketexpert.dump;
 ```
 
 ## How to run the application
