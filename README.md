@@ -25,7 +25,8 @@ CREATE DATABASE marketexpert
 Download the [dump](https://github.com/felipeflfranca/market-expert/raw/main/resources/marketexpert.dump) (database backup)
 
 
-Restore from dump (backup) using the following command:
+Restore from dump (backup) using the following command:\
+**Note:** Replace "{file_path}" with the path to the file on your computer
 ```
 .\pg_restore -U postgres -W -d marketexpert {file_path}marketexpert.dump;
 ```
