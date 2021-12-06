@@ -32,6 +32,16 @@ Restore from dump (backup) using the following command:\
 .\pg_restore -U postgres -W -d marketexpert {file_path}marketexpert.dump;
 ```
 
+## Database connection
+Open the **Database.php** file in the **APP/Config** folder and change the connection values according to your need:
+```
+    private string $dbName = 'marketexpert';
+    private string $dbUser = 'postgres';
+    private string $dbPassword = 'you_password';
+    private string $dbHost = 'host_address';
+    private int $dbPort = 5432;
+```
+
 ## How to run the application
 Open the terminal from within the project directory or navigate to it and run the following command:
 ```
