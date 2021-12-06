@@ -1,6 +1,6 @@
 # Market Expert
 # REST API PHP and React with typescript + Material UI
-This is a demonstration of using React with typescript + Material UI and a REST API backend made in pure PHP with PostgreSQL database.
+This is a demonstration based on the concept of a market program with REST API backend made in PHP with PostgreSQL database and a React with typescript + Material UI.
 
 ## Developer
 
