@@ -6,7 +6,7 @@ This is a demonstration of using React + Material UI and a REST API backend made
 Felipe França [@felipe-longo-franca](https://www.linkedin.com/in/felipe-longo-franca/)
 
 ## Prerequisites
-Make sure you have [PHP 7.4](https://www.php.net/downloads.php), [Composer](https://getcomposer.org/download/) and [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) installed.\
+Make sure you have [PHP 7.4](https://www.php.net/downloads.php) , [Composer](https://getcomposer.org/download/) and [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) installed.\
 **Note**: In development, version 14.1 of PostgreSQL was used.
 
 ## How to run the application
