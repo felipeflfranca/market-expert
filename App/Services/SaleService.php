@@ -36,7 +36,7 @@ class SaleService
                 'sale_date' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
-            HttpRequestValidator::gi()->check($data, $validationMessages);
+            HttpRequestValidator::gi()->checkRequiredFieldsExist($data, $validationMessages);
         } else {
             return Sales::getAll();
         }
@@ -55,7 +55,7 @@ class SaleService
             'data' => 'É necessário informar os dados da venda'
         ];
 
-        HttpRequestValidator::gi()->check($_POST, $validationMessages);
+        HttpRequestValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
 
         return Sales::insert($_POST);
     }

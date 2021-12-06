@@ -24,7 +24,7 @@ class ProductTypeService
                 'id' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
-            HttpRequestValidator::gi()->check($data, $validationMessages);
+            HttpRequestValidator::gi()->checkRequiredFieldsExist($data, $validationMessages);
 
             $id = intval($data['id']);
             return ProductTypes::getById(intval($id));
@@ -46,7 +46,7 @@ class ProductTypeService
             'taxes' => 'É necessário informar os percentuais de imposto dos tipos de produto'
         ];
 
-        HttpRequestValidator::gi()->check($_POST, $validationMessages);
+        HttpRequestValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
 
         return ProductTypes::insert($_POST);
     }
@@ -65,7 +65,7 @@ class ProductTypeService
             'id' => 'É necessário informar o id do tipo de produto que deseja alterar'
         ];
 
-        HttpRequestValidator::gi()->check($_PUT, $validationMessages);
+        HttpRequestValidator::gi()->checkRequiredFieldsExist($_PUT, $validationMessages);
 
         return ProductTypes::update($_PUT);
     }
@@ -84,7 +84,7 @@ class ProductTypeService
             'id' => 'É necessário informar o id do tipo de produto que deseja deletar',
         ];
 
-        HttpRequestValidator::gi()->check($_DELETE, $validationMessages);
+        HttpRequestValidator::gi()->checkRequiredFieldsExist($_DELETE, $validationMessages);
 
         return ProductTypes::delete($_DELETE);
     }

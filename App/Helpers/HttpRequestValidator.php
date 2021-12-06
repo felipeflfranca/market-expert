@@ -33,13 +33,13 @@ class HttpRequestValidator
     }
 
     /**
-     * Check for the existence of mandatory fields
+     * Checks if the sent keys exist in the array $data
      *
      * @param  array $data request data
      * @param array $keys request keys and error messages [key => message]
      * @throws Exception
      */
-    public function check(array $data, array $keys): void
+    public function checkRequiredFieldsExist(array $data, array $keys): void
     {
         $fields = array_keys($keys);
         foreach ($fields as $field) {
