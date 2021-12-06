@@ -57,15 +57,15 @@ class Products
     /**
      * Insert a new product
      *
-     * @param array $data
+     * @param array $product product data
      * @return string
      * @throws Exception
      */
-    public static function insert(array $data): string
+    public static function insert(array $product): string
     {
         $conn = new Database();
         $result = $conn->executeQuery("INSERT INTO ".self::$table." (name) VALUES (:name) ", array(
-            ':name' => $data['name']
+            ':name' => $product['name']
         ));
 
         if ($result->rowCount() > 0) {
@@ -78,17 +78,17 @@ class Products
     /**
      * Update product
      *
-     * @param array $data
+     * @param array $product product data
      * @return string
      * @throws Exception
      */
-    public static function update(array $data): string
+    public static function update(array $product): string
     {
         $conn = new Database();
         $result = $conn->executeQuery("UPDATE ".self::$table." SET name = :name, taxes = :taxes WHERE id = :id", array(
-            ':name' => $data['name'],
-            ':id' => $data['id'],
-            ':taxes' => $data['taxes']
+            ':name' => $product['name'],
+            ':id' => $product['id'],
+            ':taxes' => $product['taxes']
         ));
 
         if ($result->rowCount() > 0) {
@@ -101,15 +101,15 @@ class Products
     /**
      * Delete product
      *
-     * @param array $data
+     * @param array $product product data
      * @return string
      * @throws Exception
      */
-    public static function delete(array $data): string
+    public static function delete(array $product): string
     {
         $conn = new Database();
         $result = $conn->executeQuery("DELETE FROM ".self::$table." WHERE id = :id ", array(
-            ':id' => $data['id']
+            ':id' => $product['id']
         ));
 
         if ($result->rowCount() > 0) {

@@ -79,16 +79,16 @@ class Sales
     /**
      * Insert a new sale
      *
-     * @param array $data
+     * @param array $sale sale data
      * @return string
      * @throws Exception
      */
-    public static function insert(array $data): string
+    public static function insert(array $sale): string
     {
         $conn = new Database();
         $result = $conn->executeQuery("INSERT INTO ".self::$table." (sale_date, data) VALUES (:saleDate, :dataVal) ", array(
-            ':saleDate' => $data['sale_date'],
-            ':dataVal' => $data['data']
+            ':saleDate' => $sale['sale_date'],
+            ':dataVal' => $sale['data']
         ));
 
         if ($result->rowCount() > 0) {
