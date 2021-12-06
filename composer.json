@@ -1,0 +1,19 @@
+{
+    "name": "felip/market-expert",
+    "description": "Sistema para mercado Market Expert",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App"
+        }
+    },
+    "authors": [
+        {
+            "name": "Felipe",
+            "email": "felipe.flfranca@gmail.com"
+        }
+    ],
+    "require": {
+        "ext-pdo": "*"
+    }
+}
