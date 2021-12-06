@@ -1,9 +1,8 @@
-import DashboardIcon from '@mui/icons-material/Dashboard'
 import {Link, List, ListItem, ListItemIcon, ListItemText, Tooltip} from '@mui/material'
 import React, {useState} from 'react'
 import {useNavigate} from "react-router"
-import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 export default function Menu() {
     const history = useNavigate();
@@ -59,10 +58,29 @@ export default function Menu() {
                     onMouseLeave={handlePopoverClose}>
                     <ListItemIcon>
                         <Tooltip title="Produtos" placement="right">
-                            <MapsHomeWorkIcon/>
+                            <KeyboardArrowRightIcon/>
                         </Tooltip>
                     </ListItemIcon>
                     <ListItemText primary="Produtos"/>
+                </ListItem>
+
+                <ListItem
+                    button
+                    key={'menu-product-types'}
+                    component={Link}
+                    onClick={() => {
+                        onLinkNavigation('/product-types')
+                    }}
+                    aria-owns={open ? 'mouse-over-popover' : undefined}
+                    aria-haspopup="true"
+                    onMouseEnter={handlePopoverOpen}
+                    onMouseLeave={handlePopoverClose}>
+                    <ListItemIcon>
+                        <Tooltip title="Tipos de produto" placement="right">
+                            <KeyboardArrowRightIcon/>
+                        </Tooltip>
+                    </ListItemIcon>
+                    <ListItemText primary="Tipos de produto"/>
                 </ListItem>
 
             </List>
