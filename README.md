@@ -6,7 +6,7 @@ This is a demonstration of using React with typescript + Material UI and a REST 
 Felipe França [@felipe-longo-franca](https://www.linkedin.com/in/felipe-longo-franca/)
 
 ## Prerequisites
-Make sure you have [PHP 7.4](https://www.php.net/downloads.php) , [Composer](https://getcomposer.org/download/) and [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) installed.\
+Make sure you have [PHP 7.4](https://www.php.net/downloads.php) , [Composer](https://getcomposer.org/download/) and [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) installed and **pdo_pgsql** extension enabled into **php.ini** file.\
 **Note**: In development, version 14.1 of PostgreSQL was used.
 
 ## Test database copy
