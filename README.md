@@ -9,6 +9,27 @@ Felipe França [@felipe-longo-franca](https://www.linkedin.com/in/felipe-longo-f
 Make sure you have [PHP 7.4](https://www.php.net/downloads.php) , [Composer](https://getcomposer.org/download/) and [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) installed.\
 **Note**: In development, version 14.1 of PostgreSQL was used.
 
+## Test database copy
+Create the database
+```
+CREATE DATABASE marketexpert
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+```
+
+Download the [dump]() (database backup)
+
+
+Create a database called marketexpert and restore from backup using the following command:
+```
+.\pg_restore -U postgres -W -d marketexpert marketexpert.dump;
+```
+
 ## How to run the application
 Open the terminal from within the project directory or navigate to it and run the following command:
 ```
