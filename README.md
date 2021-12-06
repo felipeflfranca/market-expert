@@ -10,7 +10,7 @@ Make sure you have [PHP 7.4](https://www.php.net/downloads.php) , [Composer](htt
 **Note**: In development, version 14.1 of PostgreSQL was used.
 
 ## Test database copy
-Create the database
+Create the database:
 ```
 CREATE DATABASE marketexpert
     WITH 
@@ -22,10 +22,10 @@ CREATE DATABASE marketexpert
     CONNECTION LIMIT = -1;
 ```
 
-Download the [dump]() (database backup)
+Download the [dump](https://github.com/felipeflfranca/market-expert/raw/main/resources/marketexpert.dump) (database backup)
 
 
-Create a database called marketexpert and restore from backup using the following command:
+Restore from dump (backup) using the following command:
 ```
 .\pg_restore -U postgres -W -d marketexpert marketexpert.dump;
 ```
