@@ -1,4 +1,5 @@
-# Market Expert (REST API PHP and React with typescript + Material UI)
+# Market Expert
+# (REST API PHP and React with typescript + Material UI)
 This is a demonstration of using React with typescript + Material UI and a REST API backend made in pure PHP with PostgreSQL database.
 
 ## Developer
