@@ -27,7 +27,7 @@ Download the [dump](https://github.com/felipeflfranca/market-expert/raw/main/res
 
 Restore from dump (backup) using the following command:
 ```
-.\pg_restore -U postgres -W -d marketexpert marketexpert.dump;
+.\pg_restore -U postgres -W -d marketexpert {file_path}marketexpert.dump;
 ```
 
 ## How to run the application
