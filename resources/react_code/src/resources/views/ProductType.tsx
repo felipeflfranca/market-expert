@@ -8,11 +8,11 @@ import appConfig from "../config";
 export default function ProductType() {
     const {id} = useParams();
 
+    const [productType, setProductType] = useState<Array<object>>([])
+
     useEffect(() => {
         getProductType()
-    }, [])
-
-    const [productType, setProductType] = useState<Array<object>>([])
+    })
 
     async function getProductType() {
         fetch(appConfig.apiServer + '?api=productType&id=' + id, {

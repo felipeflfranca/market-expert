@@ -1,4 +1,4 @@
-import {Box, Breadcrumbs, Typography} from '@mui/material';
+import {Breadcrumbs, Typography} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import {AppProvider} from "../contexts/AppContext";
 import {DashProvider} from "../contexts/DashContext";
@@ -21,11 +21,13 @@ export default function ProductTypes() {
             {
                 Header: 'ID',
                 accessor: 'id',
+                width: 10,
                 accessorKey: true,
             },
             {
                 Header: 'Nome',
                 accessor: 'name',
+                minWidth: 200,
             },
         ],
         []
@@ -46,27 +48,24 @@ export default function ProductTypes() {
 
     function openProduct(e: any) {
         const accessorKey = e.target.getAttribute('data-accessorkey')
-        navigate('/product-type?id=' + accessorKey)
+        navigate('/product-type/' + accessorKey)
     }
 
     return (
         <AppProvider>
             <DashProvider>
-                <Breadcrumbs aria-label="breadcrumb">
-                    <Typography color="textPrimary">Tipos de produto</Typography>
-                </Breadcrumbs>
+                <div role="presentation">
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Typography color="inherit" onClick={() => {
+                            navigate('/')
+                        }}>
+                            Ponto de venda
+                        </Typography>
+                        <Typography color="text.primary">Tipos de produto</Typography>
+                    </Breadcrumbs>
+                </div>
 
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        '& > *': {
-                            m: 1,
-                        },
-                    }}>
-                    <DataTable columns={columns} data={productTypes} clickEvent={openProduct}/>
-                </Box>
+                <DataTable columns={columns} data={productTypes} clickEvent={openProduct}/>
             </DashProvider>
         </AppProvider>
     );
