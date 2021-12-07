@@ -4,8 +4,11 @@ import {AppProvider} from "../contexts/AppContext";
 import {DashProvider} from "../contexts/DashContext";
 import {DataTable} from "../components/DataTable";
 import appConfig from '../config';
+import {useNavigate} from "react-router";
 
 export default function ProductTypes() {
+
+    const navigate = useNavigate()
 
     const [productTypes, setProductTypes] = useState<Array<object>>([])
 
@@ -43,8 +46,7 @@ export default function ProductTypes() {
 
     function openProduct(e: any) {
         const accessorKey = e.target.getAttribute('data-accessorkey')
-
-        console.log(accessorKey)
+        navigate('/product-type?id=' + accessorKey)
     }
 
     return (
@@ -62,8 +64,7 @@ export default function ProductTypes() {
                         '& > *': {
                             m: 1,
                         },
-                    }}
-                >
+                    }}>
                     <DataTable columns={columns} data={productTypes} clickEvent={openProduct}/>
                 </Box>
             </DashProvider>
