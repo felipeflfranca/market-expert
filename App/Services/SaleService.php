@@ -2,11 +2,12 @@
 namespace App\Services;
 
 use App\Helpers\DateTimeHelper;
-use App\Helpers\HttpRequestValidator;
+use App\Helpers\DataValidator;
+use App\Interfaces\HttpRequestService;
 use App\Models\Sales;
 use Exception;
 
-class SaleService
+class SaleService implements HttpRequestService
 {
     /**
      * List one or more sales
@@ -36,7 +37,7 @@ class SaleService
                 'sale_date' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
-            HttpRequestValidator::gi()->checkRequiredFieldsExist($data, $validationMessages);
+            DataValidator::gi()->checkRequiredFieldsExist($data, $validationMessages);
         } else {
             return Sales::getAll();
         }
@@ -55,8 +56,24 @@ class SaleService
             'data' => 'É necessário informar os dados da venda'
         ];
 
-        HttpRequestValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
+        DataValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
 
         return Sales::insert($_POST);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function put(): string
+    {
+        throw new Exception('Não foi possível concluir a requisição');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function delete(): string
+    {
+        throw new Exception('Não foi possível concluir a requisição');
     }
 }

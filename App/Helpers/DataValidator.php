@@ -4,14 +4,14 @@ namespace App\Helpers;
 use Exception;
 
 /**
- * Requests Validator
+ * Data Validator
  */
-class HttpRequestValidator
+class DataValidator
 {
     /**
-     * @var HttpRequestValidator|null $instance hold the class instance
+     * @var DataValidator|null $instance hold the class instance
      */
-    private static ?HttpRequestValidator $instance = null;
+    private static ?DataValidator $instance = null;
 
     /**
      * Prevent initiation with outer code.
@@ -21,12 +21,12 @@ class HttpRequestValidator
     }
 
     /**
-     * @return HttpRequestValidator|null
+     * @return DataValidator|null
      */
-    public static function gi(): ?HttpRequestValidator
+    public static function gi(): ?DataValidator
     {
         if (self::$instance == null) {
-            self::$instance = new HttpRequestValidator();
+            self::$instance = new DataValidator();
         }
 
         return self::$instance;

@@ -1,11 +1,12 @@
 <?php
 namespace App\Services;
 
-use App\Helpers\HttpRequestValidator;
+use App\Helpers\DataValidator;
+use App\Interfaces\HttpRequestService;
 use App\Models\ProductTypes;
 use Exception;
 
-class ProductTypeService
+class ProductTypeService implements HttpRequestService
 {
     /**
      * List one or more product types
@@ -24,7 +25,7 @@ class ProductTypeService
                 'id' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
-            HttpRequestValidator::gi()->checkRequiredFieldsExist($data, $validationMessages);
+            DataValidator::gi()->checkRequiredFieldsExist($data, $validationMessages);
 
             $id = intval($data['id']);
             return ProductTypes::getById(intval($id));
@@ -46,7 +47,7 @@ class ProductTypeService
             'taxes' => 'É necessário informar os percentuais de imposto dos tipos de produto'
         ];
 
-        HttpRequestValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
+        DataValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
 
         return ProductTypes::insert($_POST);
     }
@@ -65,7 +66,7 @@ class ProductTypeService
             'id' => 'É necessário informar o id do tipo de produto que deseja alterar'
         ];
 
-        HttpRequestValidator::gi()->checkRequiredFieldsExist($_PUT, $validationMessages);
+        DataValidator::gi()->checkRequiredFieldsExist($_PUT, $validationMessages);
 
         return ProductTypes::update($_PUT);
     }
@@ -84,7 +85,7 @@ class ProductTypeService
             'id' => 'É necessário informar o id do tipo de produto que deseja deletar',
         ];
 
-        HttpRequestValidator::gi()->checkRequiredFieldsExist($_DELETE, $validationMessages);
+        DataValidator::gi()->checkRequiredFieldsExist($_DELETE, $validationMessages);
 
         return ProductTypes::delete($_DELETE);
     }
