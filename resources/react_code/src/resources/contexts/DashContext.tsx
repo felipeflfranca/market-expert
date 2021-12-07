@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import React, {createContext, useContext} from 'react';
 import Menu from '../components/menu';
 import {AppContext} from './AppContext';
+import appConfig from '../config';
 
 type DashContextType = {}
 
@@ -76,7 +77,7 @@ export const DashContext = createContext({} as DashContextType)
 
 export function DashProvider({children}: Props) {
     const {classes} = useContext(AppContext)
-    const {appName, darkState, handleTheme} = useContext(AppContext)
+    const {darkState, handleTheme} = useContext(AppContext)
 
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -106,7 +107,7 @@ export function DashProvider({children}: Props) {
                             <MenuIcon/>
                         </IconButton>
                         <Typography variant="h6" noWrap component="div">
-                            {appName}
+                            {appConfig.appName}
                         </Typography>
 
                         <div className={classes.grow}/>

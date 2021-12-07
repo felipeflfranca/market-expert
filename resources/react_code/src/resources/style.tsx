@@ -27,7 +27,7 @@ export function useStylesDefault() {
             },
             '& div#input-page-number': {
                 paddingBottom: '5px'
-            }
+            },
         },
         toolbar: {
             paddingRight: 24,
@@ -229,8 +229,6 @@ export function useStylesDefault() {
             paddingTop: '16px'
         },
         paginationsNumber: {
-            // marginTop: '20px',
-            // border: '1px solid #FFF'
             paddingBottom: '4px',
             paddingTop: '5px'
         },
@@ -239,7 +237,12 @@ export function useStylesDefault() {
             paddingTop: '0px'
         },
         totalPages: {
-            margenTop: '20px'
+            marginTop:  theme.spacing(0)
+        },
+        pageNumber:{
+            float: 'left',
+            marginRight: '10px',
+            height: '36px',
         }
     }));
 

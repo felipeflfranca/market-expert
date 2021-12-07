@@ -1,16 +1,13 @@
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import {Backdrop, CircularProgress, unstable_createMuiStrictModeTheme} from '@mui/material'
 import {ThemeProvider} from "@mui/material/styles"
-import React, {createContext, MouseEvent, useState} from 'react'
-import {useNavigate} from "react-router"
+import React, {createContext, useState} from 'react'
 import {useStylesDefault} from "../style"
 
 type AppContextType = {
-    classes: any | undefined
+    classes: any
     darkState: boolean
-    appName: string
     handleTheme: () => void
-    goToPage: (data: MouseEvent<HTMLElement>) => void
     handleBackdropClose: () => void
     handleBackdropToggle: () => void
 }
@@ -22,10 +19,6 @@ interface Props {
 export const AppContext = createContext({} as AppContextType)
 
 export function AppProvider({children}: Props) {
-    const appName = 'Sistema Market Expert'
-
-    const history = useNavigate()
-
     const classes = useStylesDefault()
 
     const [backdrop, setBackdrop] = useState<boolean>(false)
@@ -49,16 +42,6 @@ export function AppProvider({children}: Props) {
         localStorage.setItem('darkMode', (isDark + ''))
     }
 
-    const goToPage = (event: MouseEvent<HTMLElement>) => {
-        event.preventDefault()
-
-        const {page} = (event.target as HTMLElement).dataset
-
-        if (page !== undefined) {
-            history(page)
-        }
-    }
-
     const darkTheme = unstable_createMuiStrictModeTheme({
         palette: {
             mode: palletType,
@@ -77,11 +60,9 @@ export function AppProvider({children}: Props) {
     return (
         <ThemeProvider theme={darkTheme}>
             <AppContext.Provider value={{
-                appName,
                 darkState,
                 handleTheme,
                 classes,
-                goToPage,
                 handleBackdropClose,
                 handleBackdropToggle
             }}>
