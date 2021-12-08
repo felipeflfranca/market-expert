@@ -7,7 +7,7 @@ use App\Interfaces\HttpRequestService;
 use App\Models\Sales;
 use Exception;
 
-class SaleService implements HttpRequestService
+class SalesService implements HttpRequestService
 {
     /**
      * List one or more sales
