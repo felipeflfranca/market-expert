@@ -52,22 +52,22 @@ php -S localhost:8080 -t ./public/
 
 ### Products
 
-Insert a new product
+Insert a new product - HTTP /POST
 ```
 
 ```
 
-Update product data
+Update product data - HTTP /PUT
 ```
 
 ```
 
-Delete a product
+Delete a product - HTTP /DELETE
 ```
 
 ```
 
-**Get all products**
+Get all products - HTTP /GET
 
 - JavaScript - Fetch
 ```
@@ -88,12 +88,12 @@ fetch("http://localhost:8080/services?api=product", requestOptions)
 curl --location --request GET 'http://localhost:8080/services?api=product'
 ```
 
-Get product by code
+Get product by code - HTTP /GET
 ```
 
 ```
 
-Get the product for any data
+Get the product for any data - HTTP /GET
 ```
 
 ```
@@ -102,22 +102,22 @@ Get the product for any data
 
 ### Product types
 
-Insert a new product type
+Insert a new product type - HTTP /POST
 ```
 
 ```
 
-Update product type data
+Update product type data - HTTP /PUT
 ```
 
 ```
 
-Delete a product type
+Delete a product type - HTTP /DELETE
 ```
 
 ```
 
-**Get all product types**
+Get all product types - HTTP /GET
 
 - JavaScript - Fetch
 ```
@@ -138,12 +138,12 @@ fetch("http://localhost:8080/services?api=productType", requestOptions)
 curl --location --request GET 'http://localhost:8080/services?api=productType'
 ```
 
-Get product by id
+Get product by id - HTTP /GET
 ```
 
 ```
 
-Get the product for any data
+Get the product for any data - HTTP /GET
 ```
 
 ```
@@ -152,13 +152,13 @@ Get the product for any data
 
 ### Sales
 
-Insert a new sales
+Insert a new sales - HTTP /POST
 ```
 
 ```
 
 
-**Get all sales**
+Get all sales - HTTP /GET
 
 - JavaScript - Fetch
 ```
@@ -179,12 +179,28 @@ fetch("http://localhost:8080/services?api=sales", requestOptions)
 curl --location --request GET 'http://localhost:8080/services?api=sales'
 ```
 
-Get sales by id
+Get sales by id - HTTP /GET
+
+- JavaScript - Fetch
+```
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=sales&id={id}", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  
 ```
 
+- cURL
+```
+curl --location --request GET 'http://localhost:8080/services?api=sales&id={id}'
 ```
 
-Retrieve sales data by date
+Retrieve sales data by date - HTTP /GET
 ```
 
 ```
