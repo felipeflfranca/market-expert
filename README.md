@@ -4,14 +4,10 @@ This is a demonstration based on the concept of a market program with REST API b
 
 ## Prerequisites
 
----
-
 Make sure you have [PHP 7.4](https://www.php.net/downloads.php) , [Composer](https://getcomposer.org/download/) and [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) installed and **pdo_pgsql** extension enabled into **php.ini** file.\
 **Note**: In development, version 14.1 of PostgreSQL was used.
 
 ## Test database copy
-
----
 
 Create the database:
 ```
@@ -36,8 +32,6 @@ Restore from dump (backup) using the following command:\
 
 ## Database connection
 
----
-
 Open the **Database.php** file in the **APP/Config** folder and change the connection values according to your need:
 ```
     private string $dbName = 'marketexpert';
@@ -49,16 +43,12 @@ Open the **Database.php** file in the **APP/Config** folder and change the conne
 
 ## How to run the application
 
----
-
 Open the terminal from within the project directory or navigate to it and run the following command:
 ```
 php -S localhost:8080 -t ./public/
 ```
 
 ## Using the API
-
----
 
 ### Products
 
