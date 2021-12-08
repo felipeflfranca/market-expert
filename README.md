@@ -157,9 +157,26 @@ Insert a new sales
 
 ```
 
-Get all sales
+
+**Get all sales**
+
+- JavaScript - Fetch
+```
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=sales", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  
 ```
 
+- cURL
+```
+curl --location --request GET 'http://localhost:8080/services?api=sales'
 ```
 
 Get sales by id
