@@ -67,9 +67,25 @@ Delete a product
 
 ```
 
-Get all products
+**Get all products**
+
+- JavaScript - Fetch
+```
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=product", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  
 ```
 
+- cURL
+```
+curl --location --request GET 'http://localhost:8080/services?api=product'
 ```
 
 Get product by code
