@@ -4,14 +4,10 @@ This is a demonstration based on the concept of a market program with REST API b
 
 ## Prerequisites
 
----
-
 Make sure you have [PHP 7.4](https://www.php.net/downloads.php) , [Composer](https://getcomposer.org/download/) and [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) installed and **pdo_pgsql** extension enabled into **php.ini** file.\
 **Note**: In development, version 14.1 of PostgreSQL was used.
 
 ## Test database copy
-
----
 
 Create the database:
 ```
@@ -36,8 +32,6 @@ Restore from dump (backup) using the following command:\
 
 ## Database connection
 
----
-
 Open the **Database.php** file in the **APP/Config** folder and change the connection values according to your need:
 ```
     private string $dbName = 'marketexpert';
@@ -49,16 +43,12 @@ Open the **Database.php** file in the **APP/Config** folder and change the conne
 
 ## How to run the application
 
----
-
 Open the terminal from within the project directory or navigate to it and run the following command:
 ```
 php -S localhost:8080 -t ./public/
 ```
 
 ## Using the API
-
----
 
 ### Products
 
@@ -77,9 +67,25 @@ Delete a product
 
 ```
 
-Get all products
+**Get all products**
+
+- JavaScript - Fetch
+```
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=product", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  
 ```
 
+- cURL
+```
+curl --location --request GET 'http://localhost:8080/services?api=product'
 ```
 
 Get product by code
@@ -111,9 +117,25 @@ Delete a product type
 
 ```
 
-Get all product types
+**Get all product types**
+
+- JavaScript - Fetch
+```
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=productType", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  
 ```
 
+- cURL
+```
+curl --location --request GET 'http://localhost:8080/services?api=productType'
 ```
 
 Get product by id
@@ -135,9 +157,26 @@ Insert a new sales
 
 ```
 
-Get all sales
+
+**Get all sales**
+
+- JavaScript - Fetch
+```
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=sales", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  
 ```
 
+- cURL
+```
+curl --location --request GET 'http://localhost:8080/services?api=sales'
 ```
 
 Get sales by id
