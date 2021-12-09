@@ -18,17 +18,24 @@ class ProductService implements HttpRequestService
     public function get(?array $data): array
     {
         if (!empty($data)) {
+            if (isset($data['search'])) {
+                return Products::search($data['search']);
+            }
+
+            if (isset($data['code'])) {
+                $code = intval($data['code']);
+                return Products::getByCode(intval($code));
+            }
+
             /**
-             * If there is no "code" parameter in the request
+             * If there is no "code" or "search" parameter in the request
              */
             $validationMessages = [
+                'search' => 'Você forneceu parâmetro(s) não conhecido(s)',
                 'code' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
             DataValidator::gi()->checkRequiredFieldsExist($data, $validationMessages);
-
-            $code = intval($data['code']);
-            return Products::getByCode(intval($code));
         } else {
             return Products::getAll();
         }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\Config\Database;
@@ -15,6 +16,34 @@ class Products
      */
     private static string $table = 'products';
 
+
+    /**
+     * Search product by code, name or type
+     *
+     * @param string $product request parameters
+     * @return array
+     * @throws Exception
+     */
+    public static function search(string $product): array
+    {
+        $product = strtolower($product);
+
+        $conn = new Database();
+        $result = $conn->executeQuery("SELECT * FROM " . self::$table .
+            " INNER JOIN product_types ON product_types.id = products.product_type_id" .
+            " WHERE LOWER(products.code) LIKE '%' || :code || '%' OR LOWER(products.description) LIKE '%' || :description || '%' OR LOWER(product_types.name) LIKE '%' || :type_name || '%'", array(
+            ':code' => $product,
+            ':description' => $product,
+            ':type_name' => $product
+        ));
+
+        if ($result->rowCount() > 0) {
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            throw new Exception("Nenhum produto encontrado");
+        }
+    }
+
     /**
      * List all products
      *
@@ -24,7 +53,7 @@ class Products
     public static function getAll(): array
     {
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM ".self::$table." INNER JOIN product_types ON product_types.id = products.product_type_id");
+        $result = $conn->executeQuery("SELECT * FROM " . self::$table . " INNER JOIN product_types ON product_types.id = products.product_type_id");
 
         if ($result->rowCount() > 0) {
             return $result->fetchAll(PDO::FETCH_ASSOC);
@@ -43,7 +72,7 @@ class Products
     public static function getByCode(int $code): array
     {
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM ".self::$table." INNER JOIN product_types ON product_types.id = products.product_type_id WHERE code = :code LIMIT 1", array(
+        $result = $conn->executeQuery("SELECT * FROM " . self::$table . " INNER JOIN product_types ON product_types.id = products.product_type_id WHERE code = :code LIMIT 1", array(
             ':code' => $code
         ));
 
@@ -64,7 +93,7 @@ class Products
     public static function insert(array $product): string
     {
         $conn = new Database();
-        $result = $conn->executeQuery("INSERT INTO ".self::$table." (name) VALUES (:name) ", array(
+        $result = $conn->executeQuery("INSERT INTO " . self::$table . " (name) VALUES (:name) ", array(
             ':name' => $product['name']
         ));
 
@@ -85,7 +114,7 @@ class Products
     public static function update(array $product): string
     {
         $conn = new Database();
-        $result = $conn->executeQuery("UPDATE ".self::$table." SET name = :name, taxes = :taxes WHERE id = :id", array(
+        $result = $conn->executeQuery("UPDATE " . self::$table . " SET name = :name, taxes = :taxes WHERE id = :id", array(
             ':name' => $product['name'],
             ':id' => $product['id'],
             ':taxes' => $product['taxes']
@@ -108,7 +137,7 @@ class Products
     public static function delete(array $product): string
     {
         $conn = new Database();
-        $result = $conn->executeQuery("DELETE FROM ".self::$table." WHERE id = :id ", array(
+        $result = $conn->executeQuery("DELETE FROM " . self::$table . " WHERE id = :id ", array(
             ':id' => $product['id']
         ));
 
