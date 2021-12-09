@@ -40,7 +40,7 @@ class Products
         if ($result->rowCount() > 0) {
             return $result->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            throw new Exception("Nenhum produto encontrado");
+            throw new Exception("Nenhum produto encontrado", 200);
         }
     }
 

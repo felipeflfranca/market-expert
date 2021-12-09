@@ -22,7 +22,7 @@ const Dashboard = () => {
             <Grid item xs={12}>
                 <Grid container spacing={gridSpacing}>
                     <Grid item xs={12} md={8}>
-                        <ProductsSales isLoading={isLoading} addToBag={addToBag} />
+                        <ProductsSales isLoading={isLoading} addToBag={addToBag} bag={bag} />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <ShoppingCart isLoading={isLoading} />
