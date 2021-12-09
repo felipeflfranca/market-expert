@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 
 const ShoppingCart = ({ bag }) => (
     <>
+        {console.log(bag)}
         <MainCard content={false} sx={{ height: '80vh', position: 'relative' }}>
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12}>

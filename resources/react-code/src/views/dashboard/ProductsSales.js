@@ -54,6 +54,8 @@ const ProductsSales = ({ isLoading, addToBag, bag }) => {
         }
 
         addToBag(bag);
+
+        console.log(bag);
     };
 
     return (
