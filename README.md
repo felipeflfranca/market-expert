@@ -93,9 +93,24 @@ Get product by code - HTTP /GET
 
 ```
 
-Get the product for any data - HTTP /GET
+Get the product by code, description or type - HTTP /GET
+
+- JavaScript - Fetch
+```
+var requestOptions = {
+  method: 'GET',
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=product&search=palmito", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 ```
 
+- cURL
+```
+curl --location --request GET 'http://localhost:8080/services?api=product&search=palmito'
 ```
 
 ---
