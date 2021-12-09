@@ -1,9 +1,9 @@
 import { createStore } from 'redux';
-import reducer from './reducer';
+import index from './reducers';
 
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
-const store = createStore(reducer);
+const store = createStore(index);
 const persister = 'marketexpert';
 
 export { store, persister };

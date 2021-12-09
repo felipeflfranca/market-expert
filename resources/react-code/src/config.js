@@ -3,7 +3,9 @@ const config = {
     basename: '',
     defaultPath: '',
     fontFamily: `'Roboto', sans-serif`,
-    borderRadius: 12
+    borderRadius: 12,
+    host: 'localhost',
+    port: 8080
 };
 
 export default config;

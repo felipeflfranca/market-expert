@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 
-// reducer import
+// index import
 import customizationReducer from './customizationReducer';
+import salesReducer from './salesReducer';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
-const reducer = combineReducers({
-    customization: customizationReducer
+const index = combineReducers({
+    customization: customizationReducer,
+    sales: salesReducer
 });
 
-export default reducer;
+export default index;
