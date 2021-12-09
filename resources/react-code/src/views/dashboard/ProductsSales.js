@@ -14,6 +14,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import SkeletonPopularCard from 'ui-component/cards/Skeleton/PopularCard';
 import { gridSpacing } from 'store/constant';
 import { useState } from 'react';
+import ProductItem from '../../ui-component/products';
 
 // ==============================|| DASHBOARD DEFAULT - POPULAR CARD ||============================== //
 
@@ -45,16 +46,15 @@ const ProductsSales = ({ isLoading, addToBag, bag }) => {
         }
     };
 
-    function addProduct(code) {
-        console.log('clicou');
-        if (bag[code]) {
-            bag[code] += 1;
+    const addProduct = (product) => {
+        if (bag[product.description]) {
+            bag[product.description] += 1;
         } else {
-            bag[code] = 1;
+            bag[product.description] = 1;
         }
 
         addToBag(bag);
-    }
+    };
 
     return (
         <>
@@ -91,37 +91,13 @@ const ProductsSales = ({ isLoading, addToBag, bag }) => {
                                 {!Array.isArray(products)
                                     ? products
                                     : products.map((product) => (
-                                          <Grid container direction="column" key={product.code}>
-                                              <Grid item>
-                                                  <Grid container alignItems="center" justifyContent="space-between">
-                                                      <Grid item>
-                                                          <Typography variant="subtitle1" color="inherit">
-                                                              <strong>{product.code}</strong> - {product.description}
-                                                          </Typography>
-                                                      </Grid>
-                                                      <Grid item>
-                                                          <Grid container alignItems="center" justifyContent="space-between">
-                                                              <Grid item>
-                                                                  <Button
-                                                                      type="button"
-                                                                      data-productcode={product.code}
-                                                                      variant="contained"
-                                                                      endIcon={<AddShoppingCartIcon sx={{ marginRight: '10px' }} />}
-                                                                      onClick={() => {
-                                                                          addProduct(product.code);
-                                                                      }}
-                                                                  />
-                                                              </Grid>
-                                                          </Grid>
-                                                      </Grid>
-                                                  </Grid>
-                                              </Grid>
-                                              <Grid item>
-                                                  <Typography variant="subtitle2" sx={{ color: 'success.dark' }}>
-                                                      R$ {product.value}
-                                                  </Typography>
-                                              </Grid>
-                                          </Grid>
+                                          <ProductItem
+                                              key={product.code}
+                                              addProduct={addProduct}
+                                              code={product.code}
+                                              description={product.description}
+                                              value={product.value}
+                                          />
                                       ))}
                                 <Divider sx={{ my: 1.5 }} />
                             </Grid>
