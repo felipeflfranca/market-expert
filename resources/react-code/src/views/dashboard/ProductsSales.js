@@ -46,17 +46,14 @@ const ProductsSales = ({ isLoading, addToBag, bag }) => {
     };
 
     function addProduct(code) {
-        const newProduct = [];
-
-        console.log(code);
-        newProduct[code] = 1;
+        console.log('clicou');
         if (bag[code]) {
-            newProduct[code] = bag[code] + 1;
+            bag[code] += 1;
+        } else {
+            bag[code] = 1;
         }
 
-        addToBag([...bag, newProduct]);
-
-        console.log(bag);
+        addToBag(bag);
     }
 
     return (

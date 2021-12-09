@@ -17,6 +17,8 @@ const Dashboard = () => {
         setLoading(false);
     }, []);
 
+    console.log(bag);
+
     return (
         <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
