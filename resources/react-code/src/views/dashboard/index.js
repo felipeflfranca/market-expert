@@ -27,7 +27,7 @@ const Dashboard = () => {
                         <ProductsSales isLoading={isLoading} addToBag={addToBag} bag={bag} />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <ShoppingCart isLoading={isLoading} />
+                        <ShoppingCart isLoading={isLoading} bag={bag} />
                     </Grid>
                 </Grid>
             </Grid>

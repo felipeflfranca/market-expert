@@ -13,20 +13,24 @@ const ProductItem = ({ code, description, value, addProduct }) => (
                             <strong>{code}</strong> - {description}
                         </Typography>
                     </Grid>
-                    <Grid item>
-                        <Grid container alignItems="center" justifyContent="space-between">
-                            <Grid item>
-                                <Button
-                                    type="button"
-                                    variant="contained"
-                                    endIcon={<AddShoppingCartIcon sx={{ marginRight: '10px' }} />}
-                                    onClick={() => {
-                                        addProduct({ code, description, value });
-                                    }}
-                                />
+                    {addProduct === undefined ? (
+                        <></>
+                    ) : (
+                        <Grid item>
+                            <Grid container alignItems="center" justifyContent="space-between">
+                                <Grid item>
+                                    <Button
+                                        type="button"
+                                        variant="contained"
+                                        endIcon={<AddShoppingCartIcon sx={{ marginRight: '10px' }} />}
+                                        onClick={() => {
+                                            addProduct({ code, description, value });
+                                        }}
+                                    />
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
+                    )}
                 </Grid>
             </Grid>
             <Grid item>
