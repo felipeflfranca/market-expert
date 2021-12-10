@@ -56,19 +56,15 @@ Insert a new product - HTTP /POST
 
 - JavaScript - Fetch
 ```
-var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-var urlencoded = new URLSearchParams();
-urlencoded.append("code", "4733966");
-urlencoded.append("description", "Café Bacchi Unik - Alta Mogiana Moído 250g");
-urlencoded.append("value", "24.90");
-urlencoded.append("type_id", "3"); // product type id
+var formdata = new FormData();
+formdata.append("code", "4733966");
+formdata.append("description", "Café Bacchi Unik - Alta Mogiana Moído 250g");
+formdata.append("value", "24.90");
+formdata.append("type_id", "2");
 
 var requestOptions = {
   method: 'POST',
-  headers: myHeaders,
-  body: urlencoded,
+  body: formdata,
   redirect: 'follow'
 };
 
