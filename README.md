@@ -53,8 +53,39 @@ php -S localhost:8080 -t ./public/
 ### Products
 
 Insert a new product - HTTP /POST
+
+- JavaScript - Fetch
+```
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+var urlencoded = new URLSearchParams();
+urlencoded.append("code", "4733966");
+urlencoded.append("description", "Café Bacchi Unik - Alta Mogiana Moído 250g");
+urlencoded.append("value", "24.90");
+urlencoded.append("type_id", "3"); // product type id
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: urlencoded,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=product", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 ```
 
+- cURL
+```
+curl --location --request POST 'http://localhost:8080/services?api=product' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'code=4733966' \
+--data-urlencode 'description=Café Bacchi Unik - Alta Mogiana Moído 250g' \
+--data-urlencode 'value=24.90' \
+--data-urlencode 'type_id=3'
 ```
 
 Update product data - HTTP /PUT
