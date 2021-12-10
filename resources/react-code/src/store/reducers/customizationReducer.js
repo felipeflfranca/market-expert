@@ -2,13 +2,13 @@
 import config from 'config';
 
 // action - state management
-import * as actionTypes from '../actions';
+import * as actionTypes from '../actions/customization';
 
 export const initialState = {
     isOpen: [], // for active default menu
     fontFamily: config.fontFamily,
     borderRadius: config.borderRadius,
-    opened: false
+    opened: true
 };
 
 // ==============================|| CUSTOMIZATION REDUCER ||============================== //

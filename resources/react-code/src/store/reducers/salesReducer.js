@@ -1,5 +1,5 @@
 // action - state management
-import * as actionTypes from '../actions';
+import * as actionTypes from '../actions/sales';
 
 export const initialState = {
     bag: []
@@ -8,7 +8,7 @@ export const initialState = {
 // ==============================|| SALES REDUCER ||============================== //
 
 const salesReducer = (state = initialState, action) => {
-    let amount = 1;
+    let quantity = action.quantityInTheBag;
     let code = '';
 
     switch (action.type) {
@@ -16,12 +16,18 @@ const salesReducer = (state = initialState, action) => {
             code = `code-${action.product.code}`;
 
             if (state.bag[code]) {
-                amount = state.bag[code].amount + 1;
+                quantity = state.bag[code].quantity + quantity;
+            }
+
+            if (state.total) {
+                state.total += action.quantityInTheBag * action.product.value;
+            } else {
+                state.total = action.quantityInTheBag * action.product.value;
             }
 
             state.bag[code] = {
                 product: action.product,
-                amount
+                quantity
             };
 
             return {

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 
 // project imports
 import config from 'config';
@@ -14,13 +13,12 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import SkeletonPopularCard from 'ui-component/cards/Skeleton/PopularCard';
 import { gridSpacing } from 'store/constant';
 import ProductItem from '../../ui-component/products';
 
 // ==============================|| DASHBOARD DEFAULT - POPULAR CARD ||============================== //
 
-const ProductsSales = ({ isLoading }) => {
+const ProductsSales = () => {
     const [products, setProducts] = useState([]);
 
     async function searchProduct(search) {
@@ -68,6 +66,7 @@ const ProductsSales = ({ isLoading }) => {
                                 placeholder="Buscar produto"
                                 inputProps={{ 'aria-label': 'Buscar Produto' }}
                                 onChange={productSearch}
+                                autoFocus
                             />
                             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                             <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" type="button">
@@ -80,7 +79,7 @@ const ProductsSales = ({ isLoading }) => {
                             ? products
                             : products.map((product) => (
                                   <div key={`search-${product.code}`}>
-                                      <ProductItem key={product.code} product={product} addVisible amount={0} />
+                                      <ProductItem key={product.code} product={product} addToBagVisible quantity={0} />
                                       <Divider sx={{ my: 1.5 }} />
                                   </div>
                               ))}
