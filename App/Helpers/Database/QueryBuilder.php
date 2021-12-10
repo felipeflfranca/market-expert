@@ -1,7 +1,6 @@
 <?php
 namespace App\Helpers\Database;
 
-use App\Helpers\Validators\Data;
 use Exception;
 
 /** Assists in building queries */
