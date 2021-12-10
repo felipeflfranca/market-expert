@@ -53,8 +53,35 @@ php -S localhost:8080 -t ./public/
 ### Products
 
 Insert a new product - HTTP /POST
+
+- JavaScript - Fetch
+```
+var formdata = new FormData();
+formdata.append("code", "4733966");
+formdata.append("description", "Café Bacchi Unik - Alta Mogiana Moído 250g");
+formdata.append("value", "24.90");
+formdata.append("type_id", "2");
+
+var requestOptions = {
+  method: 'POST',
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=product", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 ```
 
+- cURL
+```
+curl --location --request POST 'http://localhost:8080/services?api=product' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'code=4733966' \
+--data-urlencode 'description=Café Bacchi Unik - Alta Mogiana Moído 250g' \
+--data-urlencode 'value=24.90' \
+--data-urlencode 'type_id=3'
 ```
 
 Update product data - HTTP /PUT
