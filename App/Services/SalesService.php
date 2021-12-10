@@ -1,8 +1,8 @@
 <?php
 namespace App\Services;
 
-use App\Helpers\DateTimeHelper;
-use App\Helpers\DataValidator;
+use App\Helpers\DateTime\Formater;
+use App\Helpers\Validators\Data;
 use App\Interfaces\HttpRequestService;
 use App\Models\Sales;
 use Exception;
@@ -11,7 +11,6 @@ class SalesService implements HttpRequestService
 {
     /**
      * List one or more sales
-     *
      * @param array|null $data request parameters
      * @return array
      * @throws Exception
@@ -25,19 +24,17 @@ class SalesService implements HttpRequestService
             }
 
             if(isset($data['sale_date'])) {
-                $saleDate = DateTimeHelper::gi()->localToUtc($data['sale_date']);
+                $saleDate = Formater::gi()->localToUtc($data['sale_date']);
                 return Sales::getByDate($saleDate);
             }
 
-            /**
-             * If there is no "id" parameter in the request
-             */
+            // If there is no "id" parameter in the request
             $validationMessages = [
                 'id' => 'Você forneceu parâmetro(s) não conhecido(s)',
                 'sale_date' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
-            DataValidator::gi()->checkRequiredFieldsExist($data, $validationMessages);
+            Data::gi()->checkRequiredFieldsExist($data, $validationMessages);
         } else {
             return Sales::getAll();
         }
@@ -51,27 +48,16 @@ class SalesService implements HttpRequestService
      */
     public function post(): string
     {
-        $validationMessages = [
-            'sale_data' => 'É necessário informar a data da venda',
-            'data' => 'É necessário informar os dados da venda'
-        ];
-
-        DataValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
-
         return Sales::insert($_POST);
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function put(): string
     {
         throw new Exception('Não foi possível concluir a requisição');
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function delete(): string
     {
         throw new Exception('Não foi possível concluir a requisição');

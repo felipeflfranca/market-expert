@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Helpers\DataValidator;
+use App\Helpers\Validators\Data;
 use App\Interfaces\HttpRequestService;
 use App\Models\Products;
 use Exception;
@@ -10,7 +10,6 @@ class ProductService implements HttpRequestService
 {
     /**
      * List one or more product
-     *
      * @param array|null $data request parameters
      * @return array
      * @throws Exception
@@ -27,15 +26,15 @@ class ProductService implements HttpRequestService
                 return Products::getByCode(intval($code));
             }
 
-            /**
-             * If there is no "code" or "search" parameter in the request
-             */
+            // If there is no "code" or "search" parameter in the request
             $validationMessages = [
                 'search' => 'Você forneceu parâmetro(s) não conhecido(s)',
                 'code' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
-            DataValidator::gi()->checkRequiredFieldsExist($data, $validationMessages);
+            Data::gi()->checkRequiredFieldsExist($data, $validationMessages);
+
+            return array();
         } else {
             return Products::getAll();
         }
@@ -43,74 +42,33 @@ class ProductService implements HttpRequestService
 
     /**
      * Insert a new product
-     *
      * @return string
      * @throws Exception
      */
     public function post(): string
     {
-        $validationMessages = [
-            'code' => 'É necessário informar o código produto que deseja cadastrar',
-            'description' => 'É necessário informar a descrição do produto que deseja cadastrar',
-            'value' => 'É necessário informar o valor do produto que deseja cadastrar',
-            'type_id' => 'É necessário informar o tipo do produto que deseja cadastrar'
-        ];
-
-        DataValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
-        $data = DataValidator::gi()->handleEncoding($_POST, ['description']);
-
-        return Products::insert($data);
+        return Products::insert($_POST);
     }
 
     /**
      * Update product
-     *
      * @return string
      * @throws Exception
      */
     public function put(): string
     {
         parse_str(file_get_contents('php://input'), $_PUT);
-
-//        $validationMessages = [
-//            'id' => 'É necessário informar o id produto que deseja cadastrar',
-//            'code' => 'É necessário informar o código produto que deseja cadastrar',
-//            'description' => 'É necessário informar a descrição do produto que deseja cadastrar',
-//            'value' => 'É necessário informar o valor do produto que deseja cadastrar',
-//            'type_id' => 'É necessário informar o tipo do produto que deseja cadastrar'
-//        ];
-//
-//        DataValidator::gi()->checkRequiredFieldsExist($_PUT, $validationMessages);
-//        $data = DataValidator::gi()->handleEncoding($_PUT, ['description']);
-//
-//        return Products::update($data);
-
-        return $this->buildUpdate('products', [
-            'code' => 'code',
-            'description' => 'description',
-            'value' => 'value',
-            'type_id' => 'product_type_id'
-        ], $_PUT, ['id' => 'id']);
+        return Products::update($_PUT);
     }
-
-
 
     /**
      * Delete product
-     *
      * @return string
      * @throws Exception
      */
     public function delete(): string
     {
         parse_str(file_get_contents('php://input'), $_DELETE);
-
-        $validationMessages = [
-            'id' => 'É necessário informar o id do produto que deseja deletar',
-        ];
-
-        DataValidator::gi()->checkRequiredFieldsExist($_DELETE, $validationMessages);
-
         return Products::delete($_DELETE);
     }
 }

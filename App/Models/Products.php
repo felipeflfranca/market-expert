@@ -3,23 +3,19 @@
 namespace App\Models;
 
 use App\Config\Database;
+use App\Helpers\Database\QueryBuilder;
 use PDO;
 use Exception;
 
-/**
- * Products model
- */
+/** Products model */
 class Products
 {
-    /**
-     * @var string $table table name
-     */
+    /** @var string $table table name */
     private static string $table = 'products';
 
 
     /**
      * Search product by code, name or type
-     *
      * @param string $product request parameters
      * @return array
      * @throws Exception
@@ -44,7 +40,6 @@ class Products
 
     /**
      * List all products
-     *
      * @return array
      * @throws Exception
      */
@@ -60,7 +55,6 @@ class Products
 
     /**
      * Get product by code
-     *
      * @param int $code request parameters
      * @return array
      * @throws Exception
@@ -72,7 +66,6 @@ class Products
             ':code' => $code
         ));
 
-
         if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhum produto encontrado");
         }
@@ -80,20 +73,21 @@ class Products
 
     /**
      * Insert a new product
-     *
      * @param array $product product data
      * @return string
      * @throws Exception
      */
     public static function insert(array $product): string
     {
-        $conn = new Database();
-        $result = $conn->executeQuery("INSERT INTO " . self::$table . " (code, description, value, product_type_id) VALUES (:code, :description, :value, :productTypeId) ", array(
-            ':code' => $product['code'],
-            ':description' => $product['description'],
-            ':value' => $product['value'],
-            ':productTypeId' => intval($product['type_id'])
+        $builder = QueryBuilder::gi()->insertBuilder($product, self::$table, array(
+            'code' => 'code',
+            'description' => 'description',
+            'value' => 'value',
+            'type_id' => 'product_type_id'
         ));
+
+        $conn = new Database();
+        $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
         if ($result->rowCount() > 0) return 'Produto cadastrado com sucesso!'; else {
             throw new Exception("Falha ao cadastrar o produto");
@@ -102,21 +96,21 @@ class Products
 
     /**
      * Update product
-     *
      * @param array $product product data
      * @return string
      * @throws Exception
      */
     public static function update(array $product): string
     {
+        $builder = QueryBuilder::gi()->updateBuilder($product, self::$table, array(
+            'code' => 'code',
+            'description' => 'description',
+            'value' => 'value',
+            'type_id' => 'product_type_id'
+        ), array( 'id' => 'id'));
+
         $conn = new Database();
-        $result = $conn->executeQuery("UPDATE " . self::$table . " SET code = :code, description = :description, value = :value, product_type_id = :typeId WHERE id = :id", array(
-            ':id' => intval($product['id']),
-            ':code' => $product['code'],
-            ':description' => $product['description'],
-            ':value' => $product['value'],
-            ':typeId' => intval($product['type_id'])
-        ));
+        $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
         if ($result->rowCount() > 0) return 'Produto alterado com sucesso!'; else {
             throw new Exception("Falha ao alterar o produto");
@@ -125,17 +119,16 @@ class Products
 
     /**
      * Delete product
-     *
      * @param array $product product data
      * @return string
      * @throws Exception
      */
     public static function delete(array $product): string
     {
+        $builder = QueryBuilder::gi()->deleteBuilder($product, self::$table, array( 'id' => 'id'));
+
         $conn = new Database();
-        $result = $conn->executeQuery("DELETE FROM " . self::$table . " WHERE id = :id ", array(
-            ':id' => $product['id']
-        ));
+        $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
         if ($result->rowCount() > 0) return 'Produto deletado com sucesso!'; else {
             throw new Exception("Falha ao deletar o produto");

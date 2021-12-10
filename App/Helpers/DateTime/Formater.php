@@ -1,31 +1,18 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\DateTime;
 
 use DateTime;
 use DateTimeZone;
 use Exception;
 
-/**
- * Helper with date and time
- */
-class DateTimeHelper
+/** Helper with date and time */
+class Formater
 {
-    /**
-     * @var DateTimeHelper|null $instance hold the class instance
-     */
     private static ?DateTimeHelper $instance = null;
 
-    /**
-     * Prevent initiation with outer code.
-     */
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
-    /**
-     * @return DateTimeHelper|null
-     */
     public static function gi(): ?DateTimeHelper
     {
         if (self::$instance == null) {
@@ -37,7 +24,6 @@ class DateTimeHelper
 
     /**
      * Convert date from "string" type to "DateTime" type
-     *
      * @param string $dateTime
      * @param string $format
      * @return string

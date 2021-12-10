@@ -2,23 +2,19 @@
 namespace App\Models;
 
 use App\Config\Database;
+use App\Helpers\Database\QueryBuilder;
 use DateTime;
 use PDO;
 use Exception;
 
-/**
- * Sales model
- */
+/** Sales model */
 class Sales
 {
-    /**
-     * @var string $table table name
-     */
+    /** @var string $table table name */
     private static string $table = 'sales';
 
     /**
      * List all sales
-     *
      * @return array
      * @throws Exception
      */
@@ -34,7 +30,6 @@ class Sales
 
     /**
      * Get sale by id
-     *
      * @param int $id sale by id
      * @return array
      * @throws Exception
@@ -53,7 +48,6 @@ class Sales
 
     /**
      * Get the sale by sale date
-     *
      * @param string $saleDate sale date
      * @return array
      * @throws Exception
@@ -72,22 +66,22 @@ class Sales
 
     /**
      * Insert a new sale
-     *
      * @param array $sale sale data
      * @return string
      * @throws Exception
      */
     public static function insert(array $sale): string
     {
-        $conn = new Database();
-        $result = $conn->executeQuery("INSERT INTO ".self::$table." (sale_date, data) VALUES (:saleDate, :dataVal) ", array(
-            ':saleDate' => $sale['sale_date'],
-            ':dataVal' => $sale['data']
+        $builder = QueryBuilder::gi()->insertBuilder($sale, self::$table, array(
+            'sale_date' => 'sale_date',
+            'data' => 'data'
         ));
+
+        $conn = new Database();
+        $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
         if ($result->rowCount() > 0) return 'Venda registrada com sucesso!'; else {
             throw new Exception("Falha ao registrar a venda");
         }
     }
-
 }
