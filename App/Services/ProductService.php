@@ -85,21 +85,15 @@ class ProductService implements HttpRequestService
 //
 //        return Products::update($data);
 
-        return $this->buildUpdate($_PUT, []);
+        return $this->buildUpdate('products', [
+            'code' => 'code',
+            'description' => 'description',
+            'value' => 'value',
+            'type_id' => 'product_type_id'
+        ], $_PUT, ['id' => 'id']);
     }
 
-    private function buildUpdate(array $data, array $condition): string
-    {
 
-        $dataKeys = array_keys($data);
-
-        $fields = "";
-        foreach ($dataKeys as $key) {
-            $fields .= ($fields ? ', ' : ' ') . $key . ' :'.$key;
-        }
-
-        return trim($fields);
-    }
 
     /**
      * Delete product
