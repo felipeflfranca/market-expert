@@ -13,7 +13,6 @@ class Products
     /** @var string $table table name */
     private static string $table = 'products';
 
-
     /**
      * Search product by code, name or type
      * @param string $product request parameters
