@@ -28,16 +28,16 @@ const ShoppingCart = ({ products }) => {
         );
     });
 
-    const total = products.total ? parseFloat(products.total).toFixed(2) : '';
+    const total = products.total ? parseFloat(products.total).toFixed(2) : 0;
 
     return (
         <MainCard content={false} sx={{ height: '80vh', position: 'relative' }}>
-            <Grid item xs={12} sx={{ pt: '16px !important' }}>
+            <Grid item xs={12} sx={{ pt: '16px !important', height: '55vh', overflowY: 'scroll', overflowX: 'hidden' }}>
                 <CardContent>{list}</CardContent>
             </Grid>
             <Grid item xs={12} sx={{ p: 1.25, pt: 0, justifyContent: 'center', bottom: 60, position: 'absolute', width: '100%' }}>
                 <Typography variant="h1" color="inherit">
-                    Total:
+                    {total ? 'Total:' : ''}
                     <span style={{ float: 'right' }}>
                         <Real>{total}</Real>
                     </span>
@@ -45,7 +45,7 @@ const ShoppingCart = ({ products }) => {
             </Grid>
             <Grid item xs={12}>
                 <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center', bottom: 0, position: 'absolute', width: '100%' }}>
-                    <Button variant="contained" size="large" disableElevation sx={{ width: '100%' }}>
+                    <Button variant="contained" size="large" disableElevation sx={{ width: '100%' }} disabled={!total}>
                         FINALIZAR COMPRA
                         <ShoppingCartIcon />
                     </Button>

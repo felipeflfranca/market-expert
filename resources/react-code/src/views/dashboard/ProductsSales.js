@@ -16,7 +16,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import ProductItem from '../../ui-component/products';
 
-// ==============================|| DASHBOARD DEFAULT - POPULAR CARD ||============================== //
+// ==============================|| PRODUCT SALES ||============================== //
 
 const ProductsSales = () => {
     const [products, setProducts] = useState([]);
