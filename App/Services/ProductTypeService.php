@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Helpers\Validators\Data;
+use App\Helpers\DataValidator\Validator;
 use App\Interfaces\HttpRequestService;
 use App\Models\ProductTypes;
 use Exception;
@@ -22,7 +22,7 @@ class ProductTypeService implements HttpRequestService
                 'id' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
-            Data::gi()->checkRequiredFieldsExist($data, $validationMessages);
+            Validator::gi()->checkRequiredFieldsExist($data, $validationMessages);
 
             $id = intval($data['id']);
             return ProductTypes::getById(intval($id));

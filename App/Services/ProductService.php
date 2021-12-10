@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Helpers\Validators\Data;
+use App\Helpers\DataValidator\Validator;
 use App\Interfaces\HttpRequestService;
 use App\Models\Products;
 use Exception;
@@ -32,7 +32,7 @@ class ProductService implements HttpRequestService
                 'code' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
-            Data::gi()->checkRequiredFieldsExist($data, $validationMessages);
+            Validator::gi()->checkRequiredFieldsExist($data, $validationMessages);
 
             return array();
         } else {

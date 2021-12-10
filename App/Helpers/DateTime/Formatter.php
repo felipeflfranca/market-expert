@@ -7,16 +7,16 @@ use DateTimeZone;
 use Exception;
 
 /** Helper with date and time */
-class Formater
+class Formatter
 {
-    private static ?DateTimeHelper $instance = null;
+    private static ?Formatter $instance = null;
 
     private function __construct() {}
 
-    public static function gi(): ?DateTimeHelper
+    public static function gi(): ?Formatter
     {
         if (self::$instance == null) {
-            self::$instance = new DateTimeHelper();
+            self::$instance = new Formatter();
         }
 
         return self::$instance;

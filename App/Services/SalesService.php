@@ -1,8 +1,8 @@
 <?php
 namespace App\Services;
 
-use App\Helpers\DateTime\Formater;
-use App\Helpers\Validators\Data;
+use App\Helpers\DateTime\Formatter;
+use App\Helpers\DataValidator\Validator;
 use App\Interfaces\HttpRequestService;
 use App\Models\Sales;
 use Exception;
@@ -24,7 +24,7 @@ class SalesService implements HttpRequestService
             }
 
             if(isset($data['sale_date'])) {
-                $saleDate = Formater::gi()->localToUtc($data['sale_date']);
+                $saleDate = Formatter::gi()->localToUtc($data['sale_date']);
                 return Sales::getByDate($saleDate);
             }
 
@@ -34,7 +34,7 @@ class SalesService implements HttpRequestService
                 'sale_date' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
-            Data::gi()->checkRequiredFieldsExist($data, $validationMessages);
+            Validator::gi()->checkRequiredFieldsExist($data, $validationMessages);
         } else {
             return Sales::getAll();
         }
