@@ -93,8 +93,11 @@ class Products
     public static function insert(array $product): string
     {
         $conn = new Database();
-        $result = $conn->executeQuery("INSERT INTO " . self::$table . " (name) VALUES (:name) ", array(
-            ':name' => $product['name']
+        $result = $conn->executeQuery("INSERT INTO " . self::$table . " (code, description, value, product_type_id) VALUES (:code, :description, :value, :productTypeId) ", array(
+            ':code' => $product['code'],
+            ':description' => $product['description'],
+            ':value' => $product['value'],
+            ':productTypeId' => intval($product['type_id'])
         ));
 
         if ($result->rowCount() > 0) {

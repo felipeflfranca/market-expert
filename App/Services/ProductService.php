@@ -53,7 +53,7 @@ class ProductService implements HttpRequestService
             'code' => 'É necessário informar o código produto que deseja cadastrar',
             'description' => 'É necessário informar a descrição do produto que deseja cadastrar',
             'value' => 'É necessário informar o valor do produto que deseja cadastrar',
-            'product_type_id' => 'É necessário informar o tipo do produto que deseja cadastrar'
+            'type_id' => 'É necessário informar o tipo do produto que deseja cadastrar'
         ];
 
         DataValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
