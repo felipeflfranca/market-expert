@@ -43,7 +43,6 @@ const ProductsSales = () => {
 
     const productSearch = (e) => {
         const value = e.target.value;
-
         addSearch(value);
 
         if (value === '') {
