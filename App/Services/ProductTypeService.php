@@ -48,8 +48,9 @@ class ProductTypeService implements HttpRequestService
         ];
 
         DataValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
+        $data = DataValidator::gi()->handleEncoding($_POST, ['name', 'taxes']);
 
-        return ProductTypes::insert($_POST);
+        return ProductTypes::insert($data);
     }
 
     /**
@@ -63,12 +64,15 @@ class ProductTypeService implements HttpRequestService
         parse_str(file_get_contents('php://input'), $_PUT);
 
         $validationMessages = [
-            'id' => 'É necessário informar o id do tipo de produto que deseja alterar'
+            'id' => 'É necessário informar o id do tipo de produto que deseja alterar',
+            'name' => 'É necessário informar o id do tipo de produto que deseja alterar',
+            'taxes' => 'É necessário informar o id do tipo de produto que deseja alterar'
         ];
 
         DataValidator::gi()->checkRequiredFieldsExist($_PUT, $validationMessages);
+        $data = DataValidator::gi()->handleEncoding($_PUT, ['name', 'taxes']);
 
-        return ProductTypes::update($_PUT);
+        return ProductTypes::update($data);
     }
 
     /**

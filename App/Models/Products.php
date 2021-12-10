@@ -37,9 +37,7 @@ class Products
             ':type_name' => $product
         ));
 
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } else {
+        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhum produto encontrado", 200);
         }
     }
@@ -55,9 +53,7 @@ class Products
         $conn = new Database();
         $result = $conn->executeQuery("SELECT * FROM " . self::$table . " INNER JOIN product_types ON product_types.id = products.product_type_id");
 
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } else {
+        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhum produto encontrado");
         }
     }
@@ -76,9 +72,8 @@ class Products
             ':code' => $code
         ));
 
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } else {
+
+        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhum produto encontrado");
         }
     }
@@ -100,9 +95,7 @@ class Products
             ':productTypeId' => intval($product['type_id'])
         ));
 
-        if ($result->rowCount() > 0) {
-            return 'Produto cadastrado com sucesso!';
-        } else {
+        if ($result->rowCount() > 0) return 'Produto cadastrado com sucesso!'; else {
             throw new Exception("Falha ao cadastrar o produto");
         }
     }
@@ -117,15 +110,15 @@ class Products
     public static function update(array $product): string
     {
         $conn = new Database();
-        $result = $conn->executeQuery("UPDATE " . self::$table . " SET name = :name, taxes = :taxes WHERE id = :id", array(
-            ':name' => $product['name'],
-            ':id' => $product['id'],
-            ':taxes' => $product['taxes']
+        $result = $conn->executeQuery("UPDATE " . self::$table . " SET code = :code, description = :description, value = :value, product_type_id = :typeId WHERE id = :id", array(
+            ':id' => intval($product['id']),
+            ':code' => $product['code'],
+            ':description' => $product['description'],
+            ':value' => $product['value'],
+            ':typeId' => intval($product['type_id'])
         ));
 
-        if ($result->rowCount() > 0) {
-            return 'Produto alterado com sucesso!';
-        } else {
+        if ($result->rowCount() > 0) return 'Produto alterado com sucesso!'; else {
             throw new Exception("Falha ao alterar o produto");
         }
     }
@@ -144,9 +137,7 @@ class Products
             ':id' => $product['id']
         ));
 
-        if ($result->rowCount() > 0) {
-            return 'Produto deletado com sucesso!';
-        } else {
+        if ($result->rowCount() > 0) return 'Produto deletado com sucesso!'; else {
             throw new Exception("Falha ao deletar o produto");
         }
     }

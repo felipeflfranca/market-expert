@@ -36,11 +36,16 @@ const ProductsSales = () => {
             .catch((error) => console.log('error', error));
     }
 
+    const clearSearch = () => {
+        console.log('teste');
+        setProducts([]);
+    };
+
     const productSearch = (e) => {
         const value = e.target.value;
 
         if (value === '') {
-            setProducts([]);
+            clearSearch();
         } else {
             searchProduct(value);
         }
@@ -69,7 +74,7 @@ const ProductsSales = () => {
                                 autoFocus
                             />
                             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                            <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" type="button">
+                            <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" type="button" onClick={clearSearch}>
                                 <ClearIcon />
                             </IconButton>
                         </Paper>

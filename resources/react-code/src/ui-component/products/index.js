@@ -42,16 +42,7 @@ const ProductItem = ({ product, addToBagVisible, quantity, dispatch }) => {
         </>
     );
 
-    const productQuantityElement =
-        !quantity && addToBagVisible ? (
-            <></>
-        ) : (
-            <Grid item>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>Quantidade: {quantity}</Grid>
-                </Grid>
-            </Grid>
-        );
+    const productQuantityElement = !quantity && addToBagVisible ? <></> : <Grid item>Quantidade: {quantity}</Grid>;
 
     const total = quantity ? (quantity * product.value).toFixed(2) : product.value;
 

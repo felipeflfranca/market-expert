@@ -48,4 +48,24 @@ class DataValidator
             }
         }
     }
+
+    /**
+     * Tries to deal with encoder issues to resolve accents
+     *
+     * @param array $data request data
+     * @param array $fields fields to be treated
+     * @throws Exception
+     */
+    public function handleEncoding(array $data, array $fields): array
+    {
+        foreach ($fields as $field) {
+            if (array_key_exists($field, $data)) {
+                if (!htmlspecialchars($data[$field])) {
+                    $data[$field] = utf8_encode($data[$field]);
+                }
+            }
+        }
+
+        return $data;
+    }
 }

@@ -54,7 +54,7 @@ class Database
      */
     public function __construct()
     {
-        $this->conn = new PDO("pgsql:dbname=$this->dbName;host=$this->dbHost;port=$this->dbPort;user=$this->dbUser;password=$this->dbPassword");
+        $this->conn = new PDO("pgsql:dbname=$this->dbName;host=$this->dbHost;port=$this->dbPort;user=$this->dbUser;password=$this->dbPassword;options='--client_encoding=UTF8'");
     }
 
     /**

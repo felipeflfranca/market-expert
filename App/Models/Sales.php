@@ -27,9 +27,7 @@ class Sales
         $conn = new Database();
         $result = $conn->executeQuery("SELECT * FROM ".self::$table);
 
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } else {
+        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhuma venda encontrada");
         }
     }
@@ -48,9 +46,7 @@ class Sales
             ':id' => $id
         ));
 
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } else {
+        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhuma venda encontrada");
         }
     }
@@ -69,9 +65,7 @@ class Sales
             ':saleDate' => $saleDate
         ));
 
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } else {
+        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhuma venda encontrada");
         }
     }
@@ -91,9 +85,7 @@ class Sales
             ':dataVal' => $sale['data']
         ));
 
-        if ($result->rowCount() > 0) {
-            return 'Venda registrada com sucesso!';
-        } else {
+        if ($result->rowCount() > 0) return 'Venda registrada com sucesso!'; else {
             throw new Exception("Falha ao registrar a venda");
         }
     }

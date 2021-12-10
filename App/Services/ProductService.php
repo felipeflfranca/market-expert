@@ -57,8 +57,9 @@ class ProductService implements HttpRequestService
         ];
 
         DataValidator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
+        $data = DataValidator::gi()->handleEncoding($_POST, ['description']);
 
-        return Products::insert($_POST);
+        return Products::insert($data);
     }
 
     /**
@@ -71,17 +72,33 @@ class ProductService implements HttpRequestService
     {
         parse_str(file_get_contents('php://input'), $_PUT);
 
-        $validationMessages = [
-            'id' => 'É necessário informar o id do produto que deseja alterar',
-            'code' => 'É necessário informar o código produto que deseja cadastrar',
-            'description' => 'É necessário informar a descrição do produto que deseja cadastrar',
-            'value' => 'É necessário informar o valor do produto que deseja cadastrar',
-            'product_type_id' => 'É necessário informar o tipo do produto que deseja cadastrar'
-        ];
+//        $validationMessages = [
+//            'id' => 'É necessário informar o id produto que deseja cadastrar',
+//            'code' => 'É necessário informar o código produto que deseja cadastrar',
+//            'description' => 'É necessário informar a descrição do produto que deseja cadastrar',
+//            'value' => 'É necessário informar o valor do produto que deseja cadastrar',
+//            'type_id' => 'É necessário informar o tipo do produto que deseja cadastrar'
+//        ];
+//
+//        DataValidator::gi()->checkRequiredFieldsExist($_PUT, $validationMessages);
+//        $data = DataValidator::gi()->handleEncoding($_PUT, ['description']);
+//
+//        return Products::update($data);
 
-        DataValidator::gi()->checkRequiredFieldsExist($_PUT, $validationMessages);
+        return $this->buildUpdate($_PUT, []);
+    }
 
-        return Products::update($_PUT);
+    private function buildUpdate(array $data, array $condition): string
+    {
+
+        $dataKeys = array_keys($data);
+
+        $fields = "";
+        foreach ($dataKeys as $key) {
+            $fields .= ($fields ? ', ' : ' ') . $key . ' :'.$key;
+        }
+
+        return trim($fields);
     }
 
     /**

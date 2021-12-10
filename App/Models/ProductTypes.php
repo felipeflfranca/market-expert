@@ -26,9 +26,7 @@ class ProductTypes
         $conn = new Database();
         $result = $conn->executeQuery("SELECT * FROM ".self::$table);
 
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } else {
+        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhum tipo de produto encontrado");
         }
     }
@@ -47,9 +45,7 @@ class ProductTypes
             ':id' => $id
         ));
 
-        if ($result->rowCount() > 0) {
-            return $result->fetchAll(PDO::FETCH_ASSOC);
-        } else {
+        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhum tipo de produto encontrado");
         }
     }
@@ -64,13 +60,12 @@ class ProductTypes
     public static function insert(array $productType): string
     {
         $conn = new Database();
-        $result = $conn->executeQuery("INSERT INTO ".self::$table." (name) VALUES (:name) ", array(
-            ':name' => $productType['name']
+        $result = $conn->executeQuery("INSERT INTO ".self::$table." (name, taxes) VALUES (:taxes, :taxes) ", array(
+            ':name' => $productType['name'],
+            ':taxes' => $productType['taxes']
         ));
 
-        if ($result->rowCount() > 0) {
-            return 'Tipo de produto cadastrado com sucesso!';
-        } else {
+        if ($result->rowCount() > 0) return 'Tipo de produto cadastrado com sucesso!'; else {
             throw new Exception("Falha ao cadastrar o tipo de produto");
         }
     }
@@ -91,9 +86,7 @@ class ProductTypes
             ':taxes' => $productType['taxes']
         ));
 
-        if ($result->rowCount() > 0) {
-            return 'Tipo de produto alterado com sucesso!';
-        } else {
+        if ($result->rowCount() > 0) return 'Tipo de produto alterado com sucesso!'; else {
             throw new Exception("Falha ao alterar o tipo de produto");
         }
     }
@@ -112,9 +105,7 @@ class ProductTypes
             ':id' => $productType['id']
         ));
 
-        if ($result->rowCount() > 0) {
-            return 'Tipo de produto deletado com sucesso!';
-        } else {
+        if ($result->rowCount() > 0) return 'Tipo de produto deletado com sucesso!'; else {
             throw new Exception("Falha ao deletar o tipo de produto");
         }
     }
