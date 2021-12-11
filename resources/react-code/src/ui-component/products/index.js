@@ -1,7 +1,7 @@
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { connect } from 'react-redux';
-import { ADD_PRODUCT_TO_BAG } from '../../store/actions/sales';
+import { ADD_PRODUCT_TO_BAG } from '../../store/actions';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Real from '../money/real';

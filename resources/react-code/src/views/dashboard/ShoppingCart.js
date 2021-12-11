@@ -32,7 +32,7 @@ const ShoppingCart = ({ products }) => {
 
     return (
         <>
-            <MainCard content={false} sx={{ height: 'calc(100vh - 195px)', position: 'relative' }}>
+            <MainCard content={false} style={{ height: 'calc(100vh - 195px)', position: 'relative' }}>
                 <Grid item xs={12}>
                     <Box style={{ maxHeight: 'calc(80vh - 110px)', overflow: 'auto', display: 'flex', flexDirection: 'column-reverse' }}>
                         <CardContent>{list}</CardContent>
@@ -49,7 +49,10 @@ const ShoppingCart = ({ products }) => {
             </MainCard>
             <MainCard content={false} sx={{ height: '65px', position: 'relative' }}>
                 <Grid item xs={12}>
-                    <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center', bottom: 0, position: 'absolute', width: '100%' }}>
+                    <CardActions
+                        sx={{ p: 1.25, pt: 0 }}
+                        style={{ justifyContent: 'center', bottom: 0, position: 'absolute', width: '100%' }}
+                    >
                         <Button variant="contained" size="large" disableElevation sx={{ width: '100%' }} disabled={!total}>
                             FINALIZAR COMPRA
                             <ShoppingCartIcon />

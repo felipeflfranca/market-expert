@@ -2,7 +2,7 @@
 import config from 'config';
 
 // action - state management
-import * as actionTypes from '../actions/customization';
+import * as actionTypes from '../actions';
 
 export const initialState = {
     isOpen: [], // for active default menu

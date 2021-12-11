@@ -1,5 +1,5 @@
 // action - state management
-import * as actionTypes from '../actions/sales';
+import * as actionTypes from '../actions';
 
 export const initialState = {
     bag: []

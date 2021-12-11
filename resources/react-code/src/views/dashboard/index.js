@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Provider } from 'react-redux';
-import { store } from '../../store';
 
 // material-ui
 import { Grid } from '@mui/material';
@@ -22,14 +20,12 @@ const Dashboard = () => {
         <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
                 <Grid container spacing={gridSpacing}>
-                    <Provider store={store}>
-                        <Grid item xs={12} md={8}>
-                            <ProductsSales isLoading={isLoading} />
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <ShoppingCart isLoading={isLoading} />
-                        </Grid>
-                    </Provider>
+                    <Grid item xs={12} md={8}>
+                        <ProductsSales isLoading={isLoading} />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <ShoppingCart isLoading={isLoading} />
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

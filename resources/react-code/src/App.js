@@ -11,7 +11,7 @@ import themes from 'themes';
 
 // project imports
 import NavigationScroll from 'layout/NavigationScroll';
-import { SET_MENU } from './store/actions/customization';
+import { SET_MENU } from './store/actions';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
