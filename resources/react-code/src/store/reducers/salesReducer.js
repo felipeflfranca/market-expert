@@ -2,7 +2,8 @@
 import * as actionTypes from '../actions';
 
 export const initialState = {
-    bag: []
+    bag: [],
+    productBag: []
 };
 
 // ==============================|| SALES REDUCER ||============================== //
@@ -33,6 +34,17 @@ const salesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 bag: state.bag
+            };
+        case actionTypes.PRODUCTS_INTO_BAG:
+            code = `code-${action.code}`;
+
+            return {
+                ...state,
+                productBag: {
+                    product: action.product,
+                    quantity: action.quantity,
+                    opened: action.opened
+                }
             };
         default:
             return state;

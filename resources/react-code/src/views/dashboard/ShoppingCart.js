@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // material-ui
 import { Box, Button, CardActions, CardContent, Grid, Typography } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Divider from '@mui/material/Divider';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ProductItem from '../../ui-component/products';
-import Divider from '@mui/material/Divider';
-import PropTypes from 'prop-types';
 import Real from '../../ui-component/money/real';
+import ProductItem from '../../ui-component/products';
 
 // ==============================|| SHOP CART ||============================== //
 

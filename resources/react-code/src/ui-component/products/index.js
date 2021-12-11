@@ -1,15 +1,23 @@
-import { Button, Grid, TextField, Typography } from '@mui/material';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { connect } from 'react-redux';
-import { ADD_PRODUCT_TO_BAG } from '../../store/actions';
 import { useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
+import { Button, Grid, IconButton, TextField, Typography } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ClearIcon from '@mui/icons-material/Clear';
+
 import Real from '../money/real';
+import { ADD_PRODUCT_TO_BAG, PRODUCTS_INTO_BAG } from '../../store/actions';
 
 // ==============================|| PRODUCT ITEM ||============================== //
 
 const ProductItem = ({ product, addToBagVisible, quantity, dispatch }) => {
     const [quantityInTheBag, increaseTheAmountInTheBag] = useState(1);
+
+    const productRemove = (product, quantity) => {
+        console.log(quantity);
+        dispatch({ type: PRODUCTS_INTO_BAG, product, quantity, opened: true });
+    };
 
     const addToBagButton = !addToBagVisible ? (
         <></>
@@ -42,7 +50,29 @@ const ProductItem = ({ product, addToBagVisible, quantity, dispatch }) => {
         </>
     );
 
-    const productQuantityElement = !quantity && addToBagVisible ? <></> : <Grid item>Quantidade: {quantity}</Grid>;
+    const productQuantityElement =
+        !quantity && addToBagVisible ? (
+            <></>
+        ) : (
+            <Grid item>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ textAlign: 'right' }}>
+                    <small>Quantidade:</small> <strong>{quantity}</strong>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{ textAlign: 'right' }}>
+                    <IconButton
+                        sx={{ p: '10px', color: 'error.dark' }}
+                        aria-label="directions"
+                        type="button"
+                        data-product={product.code}
+                        onClick={() => {
+                            productRemove(product, quantity);
+                        }}
+                    >
+                        <ClearIcon />
+                    </IconButton>
+                </Grid>
+            </Grid>
+        );
 
     const total = quantity ? (quantity * product.value).toFixed(2) : product.value;
 
