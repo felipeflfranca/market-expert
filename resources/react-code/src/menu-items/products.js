@@ -1,11 +1,10 @@
 // assets
 import NoFoodIcon from '@mui/icons-material/NoFood';
 import CategoryIcon from '@mui/icons-material/Category';
+import CalculateIcon from '@mui/icons-material/Calculate';
 
 // constant
-const icons = { NoFoodIcon, CategoryIcon };
-
-// ==============================|| PRODUCTS MENU ITEMS ||============================== //
+const icons = { NoFoodIcon, CategoryIcon, CalculateIcon };
 
 const products = {
     id: 'products',
@@ -26,6 +25,14 @@ const products = {
             type: 'item',
             url: '/list/product/types',
             icon: icons.CategoryIcon,
+            breadcrumbs: false
+        },
+        {
+            id: 'taxes',
+            title: 'Taxas de imposto',
+            type: 'item',
+            url: '/list/taxes',
+            icon: icons.CalculateIcon,
             breadcrumbs: false
         }
     ]

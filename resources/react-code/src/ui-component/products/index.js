@@ -155,19 +155,15 @@ const ProductItem = ({ sales, product, addToBagVisible, quantity, dispatch }) =>
                     aria-describedby="alert-dialog-description"
                     id="dialog-edit"
                 >
-                    <MainCard content={false} style={{ padding: '20px' }}>
-                        <DialogTitle style={{ textAlign: 'center' }}>
+                    <MainCard content={false} style={{ textAlign: 'center' }} title="EDITAR QUANTIDADE DO PRODUTO NA SACOLA">
+                        <DialogTitle>
                             <Grid item xs={12} md={12}>
-                                <Typography variant="h3" sx={{ color: '#707070', pb: 5 }}>
-                                    EDITAR QUANTIDADE DO PRODUTO NA SACOLA
-                                </Typography>
-
                                 <Typography variant="h2">{`${product.code} - ${product.description}`}</Typography>
                             </Grid>
                         </DialogTitle>
-                        <DialogContent style={{ padding: '0px', height: '100px' }}>
+                        <DialogContent>
                             <Grid container spacing={0}>
-                                <Grid item xs={8}>
+                                <Grid item xs={5} sm={5} md={5} lg={4} xl={4}>
                                     <TextField
                                         id="outlined-basic"
                                         label="Quantidade"
@@ -193,7 +189,7 @@ const ProductItem = ({ sales, product, addToBagVisible, quantity, dispatch }) =>
                                         }}
                                     />
                                 </Grid>
-                                <Grid item xs={4} style={{ padding: '0px' }}>
+                                <Grid item xs={7} sm={7} md={7} lg={8} xl={8} style={{ padding: '0px' }}>
                                     <Typography
                                         variant="h1"
                                         sx={{ color: 'success.dark' }}
@@ -204,7 +200,7 @@ const ProductItem = ({ sales, product, addToBagVisible, quantity, dispatch }) =>
                                 </Grid>
                             </Grid>
                         </DialogContent>
-                        <DialogActions style={{ borderTop: '1px solid #cecece', padding: '20px 0px 0px 0px' }}>
+                        <DialogActions style={{ borderTop: '1px solid #cecece', padding: '10px 10px 10px 0px' }}>
                             <Button variant="outlined" onClick={handleCloseEdit}>
                                 Fechar
                             </Button>
@@ -218,15 +214,11 @@ const ProductItem = ({ sales, product, addToBagVisible, quantity, dispatch }) =>
                     aria-describedby="alert-dialog-description"
                     id="dialog-remove"
                 >
-                    <MainCard content={false} style={{ padding: '20px' }}>
-                        <DialogContent style={{ padding: '0px', minHeight: '120px', textAlign: 'center' }}>
-                            <Typography variant="h3" sx={{ color: '#707070', pb: 5 }}>
-                                DESEJA REMOVER O PRODUTO DA SACOLA?
-                            </Typography>
-
+                    <MainCard content={false} style={{ textAlign: 'center' }} title="DESEJA REMOVER O PRODUTO DA SACOLA?">
+                        <DialogContent style={{ padding: '20px' }}>
                             <Typography variant="h2" sx={{ pb: 5 }}>{`${product.code} - ${product.description}`}</Typography>
                         </DialogContent>
-                        <DialogActions style={{ borderTop: '1px solid #cecece', padding: '20px 0px 0px 0px' }}>
+                        <DialogActions style={{ borderTop: '1px solid #cecece', padding: '10px 10px 10px 0px' }}>
                             <Button variant="outlined" onClick={handleCloseRemove}>
                                 Não
                             </Button>

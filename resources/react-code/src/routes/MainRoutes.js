@@ -8,6 +8,8 @@ import Product from '../views/products';
 import ProductType from '../views/product-type';
 import ProductTypes from '../views/product-type/list';
 import Report from '../views/reports';
+import Tax from 'views/taxes';
+import Taxes from 'views/taxes/list';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -29,6 +31,14 @@ const MainRoutes = {
         {
             path: '/product:id',
             element: <Product />
+        },
+        {
+            path: '/list/taxes',
+            element: <Taxes />
+        },
+        {
+            path: '/tax:id',
+            element: <Tax />
         },
         {
             path: '/list/product/types',
