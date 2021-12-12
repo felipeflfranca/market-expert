@@ -1,19 +1,17 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-// material-ui
 import { Box, Button, CardActions, CardContent, Grid, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Divider from '@mui/material/Divider';
-
-// project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Real from '../../ui-component/money/real';
 import ProductItem from '../../ui-component/products';
+import { useEffect, useRef, useState } from 'react';
 
 // ==============================|| SHOP CART ||============================== //
 
 const ShoppingCart = ({ products }) => {
+    const [total, setTotal] = useState(0);
     const keys = products.bag ? Object.keys(products.bag) : [];
 
     const list = keys.map((key) => {
@@ -28,7 +26,24 @@ const ShoppingCart = ({ products }) => {
         );
     });
 
-    const total = products.total ? parseFloat(products.total).toFixed(2) : 0;
+    const didMountRef = useRef(false);
+    useEffect(() => {
+        if (didMountRef.current) {
+            const keys = Object.keys(products.bag);
+
+            let productTotal = 0;
+
+            // eslint-disable-next-line no-plusplus
+            for (let i = 0; i < keys.length; i++) {
+                const product = products.bag[keys[i]];
+                productTotal += parseFloat(product.total);
+            }
+
+            setTotal(productTotal);
+        } else {
+            didMountRef.current = true;
+        }
+    });
 
     return (
         <>
@@ -40,9 +55,9 @@ const ShoppingCart = ({ products }) => {
                 </Grid>
                 <Grid item xs={12} sx={{ p: 1.25, pt: 0, justifyContent: 'center', bottom: 0, position: 'absolute', width: '100%' }}>
                     <Typography variant="h1" color="inherit">
-                        {total ? 'Total:' : ''}
+                        {total > 0 ? 'Total:' : ''}
                         <span style={{ float: 'right' }}>
-                            <Real>{total}</Real>
+                            <Real>{total.toFixed(2)}</Real>
                         </span>
                     </Typography>
                 </Grid>

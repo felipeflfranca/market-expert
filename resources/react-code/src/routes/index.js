@@ -2,7 +2,7 @@ import { useRoutes } from 'react-router-dom';
 
 // routes
 import MainRoutes from './MainRoutes';
-import config from 'config';
+import config from '../config';
 
 // ==============================|| ROUTING RENDER ||============================== //
 

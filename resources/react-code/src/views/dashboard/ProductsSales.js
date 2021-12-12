@@ -1,21 +1,13 @@
 import { useState } from 'react';
-
-// project imports
 import config from 'config';
-
-// material-ui
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ClearIcon from '@mui/icons-material/Clear';
-
-// project imports
 import MainCard from 'ui-component/cards/MainCard';
 import ProductItem from '../../ui-component/products';
-
-// ==============================|| PRODUCT SALES ||============================== //
 
 const ProductsSales = () => {
     const [search, addSearch] = useState('');
@@ -53,8 +45,8 @@ const ProductsSales = () => {
     };
 
     return (
-        <MainCard ontent={false} sx={{ height: 'calc(100vh - 131px)', position: 'relative' }}>
-            <Grid item xs={12} sx={{ pt: '16px !important' }}>
+        <MainCard sx={{ height: 'calc(100vh - 131px)', position: 'relative' }}>
+            <Grid item xs={12}>
                 <Paper
                     component="form"
                     sx={{
@@ -88,14 +80,16 @@ const ProductsSales = () => {
                         padding: '10px 10px 10px 10px'
                     }}
                 >
-                    {!Array.isArray(products)
-                        ? products
-                        : products.map((product) => (
-                              <div key={`search-${product.code}`}>
-                                  <ProductItem key={product.code} product={product} addToBagVisible quantity={0} />
-                                  <Divider sx={{ my: 1.5 }} />
-                              </div>
-                          ))}
+                    {!Array.isArray(products) ? (
+                        <Typography variant="h1">{products}</Typography>
+                    ) : (
+                        products.map((product) => (
+                            <div key={`search-${product.code}`}>
+                                <ProductItem key={product.code} product={product} addToBagVisible quantity={0} />
+                                <Divider sx={{ my: 1.5 }} />
+                            </div>
+                        ))
+                    )}
                 </Box>
             </Grid>
         </MainCard>
