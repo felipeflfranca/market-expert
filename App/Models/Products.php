@@ -23,10 +23,15 @@ class Products
     {
         $product = strtolower($product);
 
+        $query = "SELECT p.id, p.code, p.description, p.value, json_agg(json_build_object(taxes.name, taxes.value)) AS taxes FROM " . self::$table . " p ".
+            "INNER JOIN product_types ON product_types.id = p.product_type_id ".
+            "INNER JOIN product_types_taxes ON product_types_taxes.product_type_id = product_types.id ".
+            "INNER JOIN taxes ON taxes.id = product_types_taxes.taxe_id ".
+            "WHERE LOWER(p.code) LIKE '%' || :code || '%' OR LOWER(p.description) LIKE '%' || :description || '%' OR LOWER(product_types.name) LIKE '%' || :type_name || '%' ".
+            "GROUP BY p.id, p.code, p.description, p.value";
+
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM " . self::$table .
-            " INNER JOIN product_types ON product_types.id = products.product_type_id" .
-            " WHERE LOWER(products.code) LIKE '%' || :code || '%' OR LOWER(products.description) LIKE '%' || :description || '%' OR LOWER(product_types.name) LIKE '%' || :type_name || '%'", array(
+        $result = $conn->executeQuery($query, array(
             ':code' => $product,
             ':description' => $product,
             ':type_name' => $product
@@ -44,8 +49,13 @@ class Products
      */
     public static function getAll(): array
     {
+        $query = "SELECT p.id, p.code, p.description, p.value, json_agg(json_build_object(taxes.name, taxes.value)) AS taxes FROM " . self::$table . " p ".
+            "INNER JOIN product_types ON product_types.id = p.product_type_id ".
+            "INNER JOIN product_types_taxes ON product_types_taxes.product_type_id = product_types.id ".
+            "INNER JOIN taxes ON taxes.id = product_types_taxes.taxe_id GROUP BY p.id, p.code, p.description, p.value";
+
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM " . self::$table . " INNER JOIN product_types ON product_types.id = products.product_type_id");
+        $result = $conn->executeQuery($query);
 
         if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhum produto encontrado");
@@ -60,8 +70,13 @@ class Products
      */
     public static function getByCode(int $code): array
     {
+        $query = "SELECT p.id, p.code, p.description, p.value, json_agg(json_build_object(taxes.name, taxes.value)) AS taxes FROM " . self::$table . " p ".
+            "INNER JOIN product_types ON product_types.id = p.product_type_id ".
+            "INNER JOIN product_types_taxes ON product_types_taxes.product_type_id = product_types.id ".
+            "INNER JOIN taxes ON taxes.id = product_types_taxes.taxe_id WHERE p.code = :code GROUP BY p.id, p.code, p.description, p.value";
+
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM " . self::$table . " INNER JOIN product_types ON product_types.id = products.product_type_id WHERE code = :code LIMIT 1", array(
+        $result = $conn->executeQuery($query, array(
             ':code' => $code
         ));
 

@@ -31,9 +31,9 @@ const ShoppingCart = ({ products, dispatch }) => {
                 const taxes = JSON.parse(product.product.taxes);
                 // eslint-disable-next-line no-plusplus
                 for (let i = 0; i < taxes.length; i++) {
-                    const taxe = taxes[i];
-                    const taxeKeys = Object.keys(taxe);
-                    tTaxes += taxe[taxeKeys];
+                    const tax = taxes[i];
+                    const taxeKeys = Object.keys(tax);
+                    tTaxes += tax[taxeKeys];
                 }
 
                 calcTotalTaxes += (tTaxes * product.total) / 100;

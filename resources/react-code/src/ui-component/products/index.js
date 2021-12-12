@@ -22,9 +22,9 @@ const ProductItem = ({ sales, product, addToBagVisible, quantity, dispatch }) =>
     let totalTaxes = 0;
     const taxes = JSON.parse(product.taxes);
     // eslint-disable-next-line array-callback-return
-    taxes.map((taxe) => {
-        const keys = Object.keys(taxe);
-        totalTaxes += taxe[keys[0]];
+    taxes.map((tax) => {
+        const keys = Object.keys(tax);
+        totalTaxes += tax[keys[0]];
     });
 
     const total = quantity ? (quantity * product.value).toFixed(2) : product.value;
