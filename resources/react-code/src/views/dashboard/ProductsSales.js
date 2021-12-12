@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import config from 'config';
 import { Box, Grid, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -8,39 +9,35 @@ import IconButton from '@mui/material/IconButton';
 import ClearIcon from '@mui/icons-material/Clear';
 import MainCard from 'ui-component/cards/MainCard';
 import ProductItem from '../../ui-component/products';
+import { SEARCH_PRODUCT } from 'store/actions';
 
-const ProductsSales = () => {
-    const [search, addSearch] = useState('');
-    const [products, setProducts] = useState([]);
-
-    async function searchProduct(search) {
+const ProductsSales = ({ search, dispatch }) => {
+    async function requisitionForProductResearch(researchedProduct) {
         const requestOptions = {
             method: 'GET',
             redirect: 'follow'
         };
 
-        fetch(`http://${config.host}:${config.port}/services?api=product&search=${search}`, requestOptions)
+        fetch(`http://${config.host}:${config.port}/services?api=product&search=${researchedProduct}`, requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 const data = JSON.parse(result);
-                setProducts(data.data);
+                dispatch({ type: SEARCH_PRODUCT, products: data.data, search: researchedProduct });
             })
             .catch((error) => console.log('error', error));
     }
 
     const clearSearch = () => {
-        setProducts([]);
-        addSearch('');
+        dispatch({ type: SEARCH_PRODUCT, products: [], search: '' });
     };
 
-    const productSearch = (e) => {
+    const searchProduct = (e) => {
         const value = e.target.value;
-        addSearch(value);
 
         if (value === '') {
             clearSearch();
         } else {
-            searchProduct(value);
+            requisitionForProductResearch(value);
         }
     };
 
@@ -61,8 +58,8 @@ const ProductsSales = () => {
                         sx={{ ml: 1, flex: 1, width: '100%' }}
                         placeholder="Buscar produto"
                         inputProps={{ 'aria-label': 'Buscar Produto' }}
-                        value={search}
-                        onChange={productSearch}
+                        value={search.search}
+                        onChange={searchProduct}
                         autoFocus
                     />
                     <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -80,10 +77,10 @@ const ProductsSales = () => {
                         padding: '10px 10px 10px 10px'
                     }}
                 >
-                    {!Array.isArray(products) ? (
-                        <Typography variant="h1">{products}</Typography>
+                    {!Array.isArray(search.products) ? (
+                        <Typography variant="h1">{search.products}</Typography>
                     ) : (
-                        products.map((product) => (
+                        search.products.map((product) => (
                             <div key={`search-${product.code}`}>
                                 <ProductItem key={product.code} product={product} addToBagVisible quantity={0} />
                                 <Divider sx={{ my: 1.5 }} />
@@ -96,4 +93,9 @@ const ProductsSales = () => {
     );
 };
 
-export default ProductsSales;
+ProductsSales.propTypes = {
+    search: PropTypes.any,
+    dispatch: PropTypes.any
+};
+
+export default connect((state) => ({ search: state.sales }))(ProductsSales);

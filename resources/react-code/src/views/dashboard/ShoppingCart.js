@@ -7,24 +7,12 @@ import MainCard from 'ui-component/cards/MainCard';
 import Real from '../../ui-component/money/real';
 import ProductItem from '../../ui-component/products';
 import { useEffect, useRef, useState } from 'react';
+import config from 'config';
+import Swal from 'sweetalert2';
+import { ADD_PRODUCT_TO_BAG, SEARCH_PRODUCT } from 'store/actions';
 
-// ==============================|| SHOP CART ||============================== //
-
-const ShoppingCart = ({ products }) => {
+const ShoppingCart = ({ products, dispatch }) => {
     const [total, setTotal] = useState(0);
-    const keys = products.bag ? Object.keys(products.bag) : [];
-
-    const list = keys.map((key) => {
-        const quantity = products.bag[key].quantity;
-        const product = products.bag[key].product;
-
-        return (
-            <div key={`search-${product.code}`}>
-                <ProductItem key={product.code} product={product} addToBagVisible={false} quantity={quantity} />
-                <Divider sx={{ my: 1.5 }} />
-            </div>
-        );
-    });
 
     const didMountRef = useRef(false);
     useEffect(() => {
@@ -45,6 +33,56 @@ const ShoppingCart = ({ products }) => {
         }
     });
 
+    const keys = products.bag ? Object.keys(products.bag) : [];
+    const list = keys.map((key) => {
+        const quantity = products.bag[key].quantity;
+        const product = products.bag[key].product;
+
+        return (
+            <div key={`search-${product.code}`}>
+                <ProductItem key={product.code} product={product} addToBagVisible={false} quantity={quantity} />
+                <Divider sx={{ my: 1.5 }} />
+            </div>
+        );
+    });
+
+    const checkout = () => {
+        const keys = Object.keys(products.bag);
+
+        const sales = [];
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < keys.length; i++) {
+            const product = products.bag[keys[i]];
+            sales.push(product);
+        }
+
+        const formdata = new FormData();
+        formdata.append('data', JSON.stringify(sales));
+
+        const requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch(`http://${config.host}:${config.port}/services?api=sales`, requestOptions)
+            .then((response) => response.text())
+            .then((result) => {
+                const data = JSON.parse(result);
+
+                Swal.fire({
+                    icon: data.status,
+                    title: data.data,
+                    showConfirmButton: false,
+                    timer: 1800
+                });
+
+                dispatch({ type: ADD_PRODUCT_TO_BAG, bag: [] });
+                dispatch({ type: SEARCH_PRODUCT, products: [], search: '' });
+            })
+            .catch((error) => console.log('error', error));
+    };
+
     return (
         <>
             <MainCard content={false} style={{ height: 'calc(100vh - 195px)', position: 'relative' }}>
@@ -55,7 +93,7 @@ const ShoppingCart = ({ products }) => {
                 </Grid>
                 <Grid item xs={12} sx={{ p: 1.25, pt: 0, justifyContent: 'center', bottom: 0, position: 'absolute', width: '100%' }}>
                     <Typography variant="h1" color="inherit">
-                        {total > 0 ? 'Total:' : ''}
+                        Total:
                         <span style={{ float: 'right' }}>
                             <Real>{total.toFixed(2)}</Real>
                         </span>
@@ -68,7 +106,14 @@ const ShoppingCart = ({ products }) => {
                         sx={{ p: 1.25, pt: 0 }}
                         style={{ justifyContent: 'center', bottom: 0, position: 'absolute', width: '100%' }}
                     >
-                        <Button variant="contained" size="large" disableElevation sx={{ width: '100%' }} disabled={!total}>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            disableElevation
+                            sx={{ width: '100%' }}
+                            disabled={!total}
+                            onClick={checkout}
+                        >
                             FINALIZAR COMPRA
                             <ShoppingCartIcon />
                         </Button>
@@ -80,7 +125,8 @@ const ShoppingCart = ({ products }) => {
 };
 
 ShoppingCart.propTypes = {
-    products: PropTypes.any
+    products: PropTypes.any,
+    dispatch: PropTypes.any
 };
 
 export default connect((state) => ({ products: state.sales }))(ShoppingCart);

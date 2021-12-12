@@ -207,7 +207,7 @@ const ProductItem = ({ sales, product, addToBagVisible, quantity, dispatch }) =>
                     <MainCard content={false} style={{ padding: '20px' }}>
                         <DialogContent style={{ padding: '0px', minHeight: '120px', textAlign: 'center' }}>
                             <Typography variant="h3" sx={{ color: '#707070', pb: 5 }}>
-                                DESEJA REMOVER O ITEM DA SACOLA?
+                                DESEJA REMOVER O PRODUTO DA SACOLA?
                             </Typography>
 
                             <Typography variant="h2" sx={{ pb: 5 }}>{`${product.code} - ${product.description}`}</Typography>
