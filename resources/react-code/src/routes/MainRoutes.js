@@ -29,7 +29,7 @@ const MainRoutes = {
             element: <Products />
         },
         {
-            path: '/product:id',
+            path: '/product/:id',
             element: <Product />
         },
         {
@@ -37,7 +37,7 @@ const MainRoutes = {
             element: <Taxes />
         },
         {
-            path: '/tax:id',
+            path: '/tax/:id',
             element: <Tax />
         },
         {
