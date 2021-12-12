@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { ADD_PRODUCT_TO_BAG, SEARCH_PRODUCT } from 'store/actions';
 
 const ShoppingCart = ({ products, dispatch }) => {
+    const [totalTaxes, setTotalTaxes] = useState(0);
     const [total, setTotal] = useState(0);
 
     const didMountRef = useRef(false);
@@ -19,12 +20,25 @@ const ShoppingCart = ({ products, dispatch }) => {
         if (didMountRef.current) {
             const keys = Object.keys(products.bag);
 
+            let calcTotalTaxes = 0;
             let productTotal = 0;
             // eslint-disable-next-line no-plusplus
             for (let i = 0; i < keys.length; i++) {
                 const product = products.bag[keys[i]];
                 productTotal += parseFloat(product.total);
+
+                let tTaxes = 0;
+                const taxes = JSON.parse(product.product.taxes);
+                // eslint-disable-next-line no-plusplus
+                for (let i = 0; i < taxes.length; i++) {
+                    const taxe = taxes[i];
+                    const taxeKeys = Object.keys(taxe);
+                    tTaxes += taxe[taxeKeys];
+                }
+
+                calcTotalTaxes += (tTaxes * product.total) / 100;
             }
+            setTotalTaxes(calcTotalTaxes);
             setTotal(productTotal);
         } else {
             didMountRef.current = true;
@@ -93,7 +107,7 @@ const ShoppingCart = ({ products, dispatch }) => {
                     <Typography variant="subtitle1" color="inherit">
                         Impostos:
                         <span style={{ float: 'right' }}>
-                            <Real>{total.toFixed(2)}</Real>
+                            <Real>{totalTaxes.toFixed(2)}</Real>
                         </span>
                     </Typography>
                     <Typography variant="h1" color="inherit">
