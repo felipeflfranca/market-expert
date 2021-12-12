@@ -20,13 +20,11 @@ const ShoppingCart = ({ products, dispatch }) => {
             const keys = Object.keys(products.bag);
 
             let productTotal = 0;
-
             // eslint-disable-next-line no-plusplus
             for (let i = 0; i < keys.length; i++) {
                 const product = products.bag[keys[i]];
                 productTotal += parseFloat(product.total);
             }
-
             setTotal(productTotal);
         } else {
             didMountRef.current = true;
@@ -92,6 +90,12 @@ const ShoppingCart = ({ products, dispatch }) => {
                     </Box>
                 </Grid>
                 <Grid item xs={12} sx={{ p: 1.25, pt: 0, justifyContent: 'center', bottom: 0, position: 'absolute', width: '100%' }}>
+                    <Typography variant="subtitle1" color="inherit">
+                        Impostos:
+                        <span style={{ float: 'right' }}>
+                            <Real>{total.toFixed(2)}</Real>
+                        </span>
+                    </Typography>
                     <Typography variant="h1" color="inherit">
                         Total:
                         <span style={{ float: 'right' }}>

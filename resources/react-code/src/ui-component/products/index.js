@@ -18,6 +18,22 @@ const ProductItem = ({ sales, product, addToBagVisible, quantity, dispatch }) =>
     const [removeOpen, handleRemoveOpen] = useState(false);
     const [productQuantity, addMoreProduct] = useState(1);
 
+    let percentual = 0;
+    let totalTaxes = 0;
+    const taxes = JSON.parse(product.taxes);
+    // eslint-disable-next-line array-callback-return
+    taxes.map((taxe) => {
+        const keys = Object.keys(taxe);
+        totalTaxes += taxe[keys[0]];
+    });
+
+    const total = quantity ? (quantity * product.value).toFixed(2) : product.value;
+
+    if (totalTaxes > 0) {
+        percentual = totalTaxes;
+        totalTaxes = ((total * product.value) / 100).toFixed(2);
+    }
+
     const handleCloseEdit = () => {
         handleEditOpen(false);
     };
@@ -103,8 +119,6 @@ const ProductItem = ({ sales, product, addToBagVisible, quantity, dispatch }) =>
             </div>
         </>
     );
-
-    const total = quantity ? (quantity * product.value).toFixed(2) : product.value;
 
     const productQuantityElement =
         !quantity && addToBagVisible ? (
@@ -233,6 +247,9 @@ const ProductItem = ({ sales, product, addToBagVisible, quantity, dispatch }) =>
                         <Grid item>
                             <Typography variant={addToBagVisible ? 'h3' : 'subtitle1'} color="inherit">
                                 <strong>{product.code}</strong> - {product.description}
+                            </Typography>
+                            <Typography variant="subtitle2">
+                                Impostos: <Real>{(percentual * total) / 100}</Real>
                             </Typography>
                             <Typography variant={addToBagVisible ? 'h4' : 'subtitle1'} sx={{ color: 'success.dark' }}>
                                 <Real>{total}</Real>
