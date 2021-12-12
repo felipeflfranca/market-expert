@@ -48,6 +48,8 @@ class SalesService implements HttpRequestService
      */
     public function post(): string
     {
+
+        $_POST['date'] = Formatter::gi()->localToUtc(date('Y-m-d H:i:s'));
         return Sales::insert($_POST);
     }
 

@@ -73,7 +73,7 @@ class Sales
     public static function insert(array $sale): string
     {
         $builder = QueryBuilder::gi()->insertBuilder($sale, self::$table, array(
-            'sale_date' => 'sale_date',
+            'date' => 'date',
             'data' => 'data'
         ));
 
