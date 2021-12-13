@@ -21,7 +21,9 @@ class Sales
     public static function getAll(): array
     {
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM ".self::$table);
+        $result = $conn->executeQuery("SELECT id, to_char(date AT TIME ZONE 'utc' AT TIME ZONE :timezone, 'DD/MM/YYYY HH24:MI:SS') AS date, sales.data FROM ".self::$table, array(
+            ':timezone' => date_default_timezone_get()
+        ));
 
         if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhuma venda encontrada");
@@ -37,11 +39,12 @@ class Sales
     public static function getById(int $id): array
     {
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM ".self::$table." WHERE code = :id LIMIT 1", array(
-            ':id' => $id
+        $result = $conn->executeQuery("SELECT id, to_char(date AT TIME ZONE 'utc' AT TIME ZONE :timezone, 'DD/MM/YYYY HH24:MI:SS') AS date, sales.data FROM ".self::$table." WHERE id = :id LIMIT 1", array(
+            ':id' => $id,
+            ':timezone' => date_default_timezone_get()
         ));
 
-        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
+        if ($result->rowCount() > 0) return $result->fetch(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhuma venda encontrada");
         }
     }

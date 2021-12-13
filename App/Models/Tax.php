@@ -23,7 +23,7 @@ class Tax
         $search = strtolower($tax);
 
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM " . self::$table . " WHERE LOWER(name) LIKE '%' || :name || '%' ", array(
+        $result = $conn->executeQuery("SELECT * FROM " . self::$table . " WHERE LOWER(name) LIKE '%' || :name || '%' ORDER BY name", array(
             ':name' => $search,
         ));
 
@@ -40,7 +40,7 @@ class Tax
     public static function getAll(): array
     {
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM ".self::$table);
+        $result = $conn->executeQuery("SELECT * FROM ".self::$table. " ORDER BY name");
 
         if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhuma taxa de imposto encontrada");

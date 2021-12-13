@@ -64,23 +64,23 @@ class Products
 
     /**
      * Get product by code
-     * @param int $code request parameters
+     * @param int $id request parameters
      * @return array
      * @throws Exception
      */
-    public static function getByCode(int $code): array
+    public static function getById(int $id): array
     {
-        $query = "SELECT p.id, p.code, p.description, p.value, json_agg(json_build_object(taxes.name, taxes.value)) AS taxes FROM " . self::$table . " p ".
+        $query = "SELECT p.id, p.code, p.description, p.value, product_types.id AS type_id, product_types.name AS type_name, json_agg(json_build_object(taxes.name, taxes.value)) AS taxes FROM " . self::$table . " p ".
             "INNER JOIN product_types ON product_types.id = p.product_type_id ".
             "INNER JOIN product_types_taxes ON product_types_taxes.product_type_id = product_types.id ".
-            "INNER JOIN taxes ON taxes.id = product_types_taxes.tax_id WHERE p.code = :code GROUP BY p.id, p.code, p.description, p.value";
+            "INNER JOIN taxes ON taxes.id = product_types_taxes.tax_id WHERE p.id = :id GROUP BY p.id, p.code, p.description, p.value, product_types.id, product_types.name";
 
         $conn = new Database();
         $result = $conn->executeQuery($query, array(
-            ':code' => $code
+            ':id' => $id
         ));
 
-        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
+        if ($result->rowCount() > 0) return $result->fetch(PDO::FETCH_ASSOC); else {
             throw new Exception("Nenhum produto encontrado");
         }
     }

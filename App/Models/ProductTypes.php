@@ -19,7 +19,7 @@ class ProductTypes
      */
     public static function getAll(): array
     {
-        $query = "SELECT pt.id, pt.name, json_agg(json_build_object(taxes.id, taxes.name||'('||taxes.value||'%)')) AS taxes FROM " . self::$table . " pt ".
+        $query = "SELECT pt.id, pt.name, json_agg(taxes.id) AS taxes FROM " . self::$table . " pt ".
             "INNER JOIN product_types_taxes ON product_types_taxes.product_type_id = pt.id ".
             "INNER JOIN taxes ON taxes.id = product_types_taxes.tax_id ".
             "GROUP BY pt.id, pt.name ";
@@ -40,7 +40,7 @@ class ProductTypes
      */
     public static function getById(int $id): array
     {
-        $query = "SELECT pt.id, pt.name, json_agg(json_build_object(taxes.id, taxes.name||'('||taxes.value||'%)')) AS taxes FROM " . self::$table . " pt ".
+        $query = "SELECT pt.id, pt.name, json_agg(taxes.id) AS taxes FROM " . self::$table . " pt ".
             "INNER JOIN product_types_taxes ON product_types_taxes.product_type_id = pt.id ".
             "INNER JOIN taxes ON taxes.id = product_types_taxes.tax_id ".
             "WHERE pt.  id = :id  ".

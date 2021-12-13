@@ -32,11 +32,11 @@ class Formatter
     public function localToUtc(string $dateTime, string $format = 'Y-m-d H:i:s'): string
     {
         try {
-            $utc = new DateTimeZone("UTC");
-            $newTimezone = new DateTimeZone(date_default_timezone_get());
-            $date = new DateTime($dateTime, $utc);
-            $date->setTimezone($newTimezone);
-            return $date->format($format);
+            $dateTime = $dateTime;
+            $tz_from = date_default_timezone_get();
+            $newDateTime = new DateTime($dateTime, new DateTimeZone($tz_from));
+            $newDateTime->setTimezone(new DateTimeZone("UTC"));
+            return $newDateTime->format("Y-m-d H:i:s");
         } catch (Exception $e) {
             throw new Exception("Erro ao converter data e hora");
         }

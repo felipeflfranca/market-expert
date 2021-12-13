@@ -63,18 +63,22 @@ const Tax = () => {
                 {id ? 'Alterar taxa de imposto' : 'Cadastrar taxa de imposto'}
             </Grid>
             <Grid item xs={4} sm={4} md={4} lg={4} xl={3} sx={{ textAlign: 'right' }}>
-                <Fab
-                    color="primary"
-                    aria-label="add"
-                    size="small"
-                    title="Adicionar nova taxa de imposto"
-                    onClick={() => {
-                        setData({ ...data, name: '', value: '' });
-                        navigate(`/tax`);
-                    }}
-                >
-                    <AddIcon />
-                </Fab>
+                {id ? (
+                    <Fab
+                        color="primary"
+                        aria-label="add"
+                        size="small"
+                        title="Adicionar nova taxa de imposto"
+                        onClick={() => {
+                            setData([]);
+                            navigate(`/tax`);
+                        }}
+                    >
+                        <AddIcon />
+                    </Fab>
+                ) : (
+                    <></>
+                )}
             </Grid>
         </Grid>
     );

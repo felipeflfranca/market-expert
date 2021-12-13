@@ -15,11 +15,27 @@ import Swal from 'sweetalert2';
 const ProductType = () => {
     const { id } = useParams();
     const [data, setData] = useState([]);
-    const [taxes, setTaxes] = useState([]);
+    const [allTaxes, setAllTaxes] = useState([]);
+    const [selectedTax, selectTax] = useState([]);
 
     const navigate = useNavigate();
 
-    if (data.length === 0 && id) {
+    const getAllTaxes = () => {
+        if (allTaxes.length === 0) {
+            fetch(`http://${config.host}:${config.port}/services?api=tax`, {
+                method: 'GET',
+                redirect: 'follow'
+            })
+                .then((response) => response.text())
+                .then((result) => {
+                    const data = JSON.parse(result);
+                    setAllTaxes(data.data);
+                })
+                .catch((error) => console.log('error', error));
+        }
+    };
+
+    const getProductType = () => {
         fetch(`http://${config.host}:${config.port}/services?api=productType&id=${id}`, {
             method: 'GET',
             redirect: 'follow'
@@ -30,14 +46,47 @@ const ProductType = () => {
                 const taxes = JSON.parse(data.data.taxes);
 
                 setData(data.data);
-                setTaxes(taxes);
+
+                const selected = [];
+                allTaxes.forEach((alltax) => {
+                    // eslint-disable-next-line no-plusplus
+                    for (let i = 0; i < taxes.length; i++) {
+                        if (parseInt(taxes[i], 10) === parseInt(alltax.id, 10)) {
+                            selected.push(`${alltax.name} (${alltax.value}%)`);
+                        }
+                    }
+                });
+
+                selectTax(selected);
             })
             .catch((error) => console.log('error', error));
+    };
+
+    getAllTaxes();
+    if (data.length === 0 && id) {
+        getProductType();
     }
 
     const name = data.name ? data.name : '';
 
     const save = () => {
+        let productTypeTax = '';
+        // eslint-disable-next-line array-callback-return
+        allTaxes.map((tax) => {
+            const text = `${tax.name} (${tax.value}%)`;
+
+            // eslint-disable-next-line no-plusplus
+            for (let i = 0; i < selectedTax.length; i++) {
+                const selected = selectedTax[i];
+
+                if (text === selected) {
+                    productTypeTax += productTypeTax !== '' ? `,${tax.id}` : tax.id;
+                    break;
+                }
+            }
+        });
+        data.taxes = productTypeTax;
+
         const myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -72,18 +121,23 @@ const ProductType = () => {
                 {id ? 'Alterar tipo de produto' : 'Cadastrar tipo de produto'}
             </Grid>
             <Grid item xs={4} sm={4} md={4} lg={4} xl={3} sx={{ textAlign: 'right' }}>
-                <Fab
-                    color="primary"
-                    aria-label="add"
-                    size="small"
-                    title="Adicionar novo tipo de produto"
-                    onClick={() => {
-                        setData({ ...data, name: '', value: '' });
-                        navigate(`/product/type`);
-                    }}
-                >
-                    <AddIcon />
-                </Fab>
+                {id ? (
+                    <Fab
+                        color="primary"
+                        aria-label="add"
+                        size="small"
+                        title="Adicionar novo tipo de produto"
+                        onClick={() => {
+                            setData([]);
+                            selectTax([]);
+                            navigate(`/product/type`);
+                        }}
+                    >
+                        <AddIcon />
+                    </Fab>
+                ) : (
+                    <></>
+                )}
             </Grid>
         </Grid>
     );
@@ -100,31 +154,29 @@ const ProductType = () => {
         }
     };
 
-    const names = [
-        'Oliver Hansen',
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder'
-    ];
-
-    const [personName, setPersonName] = useState([]);
-
     const handleChange = (event) => {
         const {
             target: { value }
         } = event;
-        setPersonName(
+
+        selectTax(
             // On autofill we get a the stringified value.
             typeof value === 'string' ? value.split(',') : value
         );
     };
     // ---------------------------------------------
+
+    // eslint-disable-next-line array-callback-return
+    const options = allTaxes.map((tax) => {
+        const text = `${tax.name} (${tax.value}%)`;
+
+        return (
+            <MenuItem key={text} value={text}>
+                <Checkbox checked={selectedTax.indexOf(text) > -1} />
+                <ListItemText primary={text} />
+            </MenuItem>
+        );
+    });
 
     return (
         <>
@@ -151,18 +203,13 @@ const ProductType = () => {
                                     labelId="demo-multiple-checkbox-label"
                                     id="demo-multiple-checkbox"
                                     multiple
-                                    value={personName}
+                                    value={selectedTax}
                                     onChange={handleChange}
                                     input={<OutlinedInput label="Impostos" />}
                                     renderValue={(selected) => selected.join(', ')}
                                     MenuProps={MenuProps}
                                 >
-                                    {taxes.map((name, value) => (
-                                        <MenuItem key={value} value={value}>
-                                            <Checkbox checked={personName.indexOf(value) > -1} />
-                                            <ListItemText primary={value} />
-                                        </MenuItem>
-                                    ))}
+                                    {options}
                                 </Select>
                             </FormControl>
                         </Grid>

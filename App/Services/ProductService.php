@@ -21,9 +21,9 @@ class ProductService implements HttpRequestService
                 return Products::search($data['search']);
             }
 
-            if (isset($data['code'])) {
-                $code = intval($data['code']);
-                return Products::getByCode(intval($code));
+            if (isset($data['id'])) {
+                $id = intval($data['id']);
+                return Products::getById(intval($id));
             }
 
             // If there is no "code" or "search" parameter in the request

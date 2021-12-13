@@ -18,7 +18,7 @@ const ProductTypes = () => {
         {
             field: 'name',
             headerName: 'Nome',
-            width: 150,
+            width: 500,
             editable: false
         },
         {
