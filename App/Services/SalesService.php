@@ -23,15 +23,15 @@ class SalesService implements HttpRequestService
                 return Sales::getById($id);
             }
 
-            if(isset($data['sale_date'])) {
-                $saleDate = Formatter::gi()->localToUtc($data['sale_date']);
+            if(isset($data['date'])) {
+                $saleDate = Formatter::gi()->localToUtc($data['date']);
                 return Sales::getByDate($saleDate);
             }
 
             // If there is no "id" parameter in the request
             $validationMessages = [
                 'id' => 'Você forneceu parâmetro(s) não conhecido(s)',
-                'sale_date' => 'Você forneceu parâmetro(s) não conhecido(s)',
+                'date' => 'Você forneceu parâmetro(s) não conhecido(s)',
             ];
 
             Validator::gi()->checkRequiredFieldsExist($data, $validationMessages);

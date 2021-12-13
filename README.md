@@ -56,15 +56,19 @@ Insert a new product - HTTP /POST
 
 - JavaScript - Fetch
 ```
-var formdata = new FormData();
-formdata.append("code", "4733966");
-formdata.append("description", "Café Bacchi Unik - Alta Mogiana Moído 250g");
-formdata.append("value", "24.90");
-formdata.append("type_id", "2");
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+var urlencoded = new URLSearchParams();
+urlencoded.append("code", "8813268");
+urlencoded.append("description", "Vinagre Balsâmico CASTELO 500ml");
+urlencoded.append("value", "26.29");
+urlencoded.append("type_id", "4");
 
 var requestOptions = {
-  method: 'POST',
-  body: formdata,
+  method: 'GET',
+  headers: myHeaders,
+  body: urlencoded,
   redirect: 'follow'
 };
 
@@ -76,22 +80,76 @@ fetch("http://localhost:8080/services?api=product", requestOptions)
 
 - cURL
 ```
-curl --location --request POST 'http://localhost:8080/services?api=product' \
+curl --location --request GET 'http://localhost:8080/services?api=product' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'code=4733966' \
---data-urlencode 'description=Café Bacchi Unik - Alta Mogiana Moído 250g' \
---data-urlencode 'value=24.90' \
---data-urlencode 'type_id=3'
+--data-urlencode 'code=8813268' \
+--data-urlencode 'description=Vinagre Balsâmico CASTELO 500ml' \
+--data-urlencode 'value=26.29' \
+--data-urlencode 'type_id=4'
 ```
 
 Update product data - HTTP /PUT
 ```
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
+var urlencoded = new URLSearchParams();
+urlencoded.append("id", "16");
+urlencoded.append("code", "8813268");
+urlencoded.append("description", "Vinagre Balsâmico CASTELO 500ml");
+urlencoded.append("value", "26.29");
+urlencoded.append("type_id", "4");
+
+var requestOptions = {
+  method: 'PUT',
+  headers: myHeaders,
+  body: urlencoded,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=product", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+```
+
+- cURL
+```
+curl --location --request PUT 'http://localhost:8080/services?api=product' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'id=16' \
+--data-urlencode 'code=8813268' \
+--data-urlencode 'description=Vinagre Balsâmico CASTELO 500ml' \
+--data-urlencode 'value=26.29' \
+--data-urlencode 'type_id=4'
 ```
 
 Delete a product - HTTP /DELETE
 ```
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
+var urlencoded = new URLSearchParams();
+urlencoded.append("id", "16");
+
+var requestOptions = {
+  method: 'DELETE',
+  headers: myHeaders,
+  body: urlencoded,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=product", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+```
+
+- cURL
+```
+curl --location --request DELETE 'http://localhost:8080/services?api=product' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'id=16'
 ```
 
 Get all products - HTTP /GET
@@ -107,7 +165,6 @@ fetch("http://localhost:8080/services?api=product", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
-  
 ```
 
 - cURL
@@ -115,7 +172,7 @@ fetch("http://localhost:8080/services?api=product", requestOptions)
 curl --location --request GET 'http://localhost:8080/services?api=product'
 ```
 
-Get product by code - HTTP /GET
+Get product by id - HTTP /GET
 
 - JavaScript - Fetch
 ```
@@ -124,7 +181,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://localhost:8080/services?api=product&code=12021", requestOptions)
+fetch("http://localhost:8080/services?api=product&id=2", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -133,7 +190,7 @@ fetch("http://localhost:8080/services?api=product&code=12021", requestOptions)
 
 - cURL
 ```
-curl --location --request GET 'http://localhost:8080/services?api=product&code=12021'
+curl --location --request GET 'http://localhost:8080/services?api=product&id=2'
 ```
 
 Get the product by code, description or type - HTTP /GET
@@ -145,7 +202,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://localhost:8080/services?api=product&search=palmito", requestOptions)
+fetch("http://localhost:8080/services?api=product&search=papel", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -153,7 +210,7 @@ fetch("http://localhost:8080/services?api=product&search=palmito", requestOption
 
 - cURL
 ```
-curl --location --request GET 'http://localhost:8080/services?api=product&search=palmito'
+curl --location --request GET 'http://localhost:8080/services?api=product&search=papel'
 ```
 
 ---
@@ -161,18 +218,97 @@ curl --location --request GET 'http://localhost:8080/services?api=product&search
 ### Product types
 
 Insert a new product type - HTTP /POST
+- JavaScript - Fetch
+```
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+var urlencoded = new URLSearchParams();
+urlencoded.append("name", "Papelaria 2");
+urlencoded.append("taxes", "2,3");
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: urlencoded,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=productType", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+
 ```
 
+- cURL
+```
+curl --location --request POST 'http://localhost:8080/services?api=productType' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'name=Papelaria 2' \
+--data-urlencode 'taxes=2,3'
 ```
 
 Update product type data - HTTP /PUT
+- JavaScript - Fetch
+```
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+var urlencoded = new URLSearchParams();
+urlencoded.append("id", "14");
+urlencoded.append("name", "Papelaria");
+urlencoded.append("taxes", "2,3");
+
+var requestOptions = {
+  method: 'PUT',
+  headers: myHeaders,
+  body: urlencoded,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=productType", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 ```
 
+- cURL
+```
+curl --location --request PUT 'http://localhost:8080/services?api=productType' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'id=14' \
+--data-urlencode 'name=Papelaria' \
+--data-urlencode 'taxes=2,3'
 ```
 
-Delete a product type - HTTP /DELETE
+Delete a product type - HTTP /DELETE (Note: It will only be deleted if it is not related to another table)
+- JavaScript - Fetch
+```
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+var urlencoded = new URLSearchParams();
+urlencoded.append("id", "14");
+
+var requestOptions = {
+  method: 'DELETE',
+  headers: myHeaders,
+  body: urlencoded,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=productType", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 ```
 
+- cURL
+```
+curl --location --request DELETE 'http://localhost:8080/services?api=productType' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'id=14'
 ```
 
 Get all product types - HTTP /GET
@@ -196,17 +332,29 @@ fetch("http://localhost:8080/services?api=productType", requestOptions)
 curl --location --request GET 'http://localhost:8080/services?api=productType'
 ```
 
-Get product by id - HTTP /GET
+Get product type by id - HTTP /GET
+
+- JavaScript - Fetch
+```
+var urlencoded = new URLSearchParams();
+
+var requestOptions = {
+  method: 'GET',
+  body: urlencoded,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8080/services?api=productType&id=3", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+  
 ```
 
+- cURL
 ```
-
-Get the product for any data - HTTP /GET
+curl --location --request GET 'http://localhost:8080/services?api=productType&id=3'
 ```
-
-```
-
----
 
 ### Sales
 
@@ -241,12 +389,15 @@ Get sales by id - HTTP /GET
 
 - JavaScript - Fetch
 ```
+var urlencoded = new URLSearchParams();
+
 var requestOptions = {
   method: 'GET',
+  body: urlencoded,
   redirect: 'follow'
 };
 
-fetch("http://localhost:8080/services?api=sales&id={id}", requestOptions)
+fetch("http://localhost:8080/services?api=sales&id=2", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -255,10 +406,5 @@ fetch("http://localhost:8080/services?api=sales&id={id}", requestOptions)
 
 - cURL
 ```
-curl --location --request GET 'http://localhost:8080/services?api=sales&id={id}'
-```
-
-Retrieve sales data by date - HTTP /GET
-```
-
+curl --location --request GET 'http://localhost:8080/services?api=sales&id=2'
 ```

@@ -58,7 +58,7 @@ class Sales
     public static function getByDate(string $saleDate): array
     {
         $conn = new Database();
-        $result = $conn->executeQuery("SELECT * FROM ".self::$table." WHERE sale_date = :saleDate LIMIT 1", array(
+        $result = $conn->executeQuery("SELECT * FROM ".self::$table." WHERE date = :saleDate LIMIT 1", array(
             ':saleDate' => $saleDate
         ));
 
