@@ -42,8 +42,11 @@ Open the **Database.php** file in the **APP/Config** folder and change the conne
 ```
 
 ## How to run the application
-
 Open the terminal from within the project directory or navigate to it and run the following command:
+```
+composer install
+```
+
 ```
 php -S localhost:8080 -t ./public/
 ```
