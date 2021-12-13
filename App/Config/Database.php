@@ -71,4 +71,9 @@ class Database
 
         return $stmt;
     }
+
+    public function lastInsertId()
+    {
+        return $this->conn->lastInsertId();
+    }
 }

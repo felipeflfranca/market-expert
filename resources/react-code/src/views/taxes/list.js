@@ -1,58 +1,53 @@
-// material-ui
 import { DataGrid, ptBR } from '@mui/x-data-grid';
-import { ptBR as ptBRCore } from '@mui/material/locale';
+import { ptBR as corePtBr } from '@mui/material/locale';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import config from 'config';
 import { useEffect, useState } from 'react';
-import { Button, ButtonGroup } from '@mui/material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Button, ButtonGroup, Fab, Grid } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-
-// project imports
+import { useNavigate } from 'react-router-dom';
 import MainCard from 'ui-component/cards/MainCard';
-
-const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    {
-        field: 'name',
-        headerName: 'Nome',
-        width: 150,
-        editable: false
-    },
-    {
-        field: 'value',
-        headerName: 'Valor',
-        width: 150,
-        editable: false
-    },
-    {
-        field: 'actions',
-        type: 'actions',
-        headerName: 'Ações',
-        width: 100,
-        cellClassName: 'actions',
-        getActions: ({ id }) => [
-            <ButtonGroup size="small" aria-label="small button group">
-                <Button
-                    endIcon={<DeleteOutlineIcon sx={{ margin: '3px 3px 3px -6px', color: 'error.dark' }} />}
-                    style={{ border: '0px' }}
-                    onClick={() => {
-                        console.log(id);
-                    }}
-                />
-                <Button
-                    endIcon={<EditIcon sx={{ margin: '3px 3px 3px -6px' }} />}
-                    style={{ border: '0px' }}
-                    onClick={() => {
-                        console.log(id);
-                    }}
-                />
-            </ButtonGroup>
-        ]
-    }
-];
+import AddIcon from '@mui/icons-material/Add';
 
 const Taxes = () => {
+    const navigate = useNavigate();
     const [rows, setRows] = useState([]);
+
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 100, renderCell: (params) => parseInt(params.value, 10) },
+        {
+            field: 'name',
+            headerName: 'Nome',
+            width: 150,
+            editable: false
+        },
+        {
+            field: 'value',
+            headerName: 'Valor',
+            width: 150,
+            editable: false,
+            renderCell: (params) => <>{params.value}%</>
+        },
+        {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Ações',
+            width: 100,
+            cellClassName: 'actions',
+            getActions: ({ id }) => [
+                <ButtonGroup size="small" aria-label="small button group">
+                    <Button
+                        endIcon={<EditIcon sx={{ margin: '3px 3px 3px -6px' }} />}
+                        style={{ border: '0px' }}
+                        onClick={() => {
+                            navigate(`/tax/${id}`);
+                        }}
+                        title="Editar"
+                    />
+                </ButtonGroup>
+            ]
+        }
+    ];
 
     const requestOptions = {
         method: 'GET',
@@ -66,33 +61,52 @@ const Taxes = () => {
                 .then((result) => {
                     const data = JSON.parse(result);
                     setRows(data.data);
-                    console.log('teste');
                 })
                 .catch((error) => console.log('error', error));
         }
     });
 
-    const localizedTextsMap = {
-        columnMenuUnsort: 'não classificado',
-        columnMenuSortAsc: 'Classificar por ordem crescente',
-        columnMenuSortDesc: 'Classificar por ordem decrescente',
-        columnMenuFilter: 'Filtro',
-        columnMenuHideColumn: 'Ocultar',
-        columnMenuShowColumns: 'Mostrar colunas'
-    };
+    const theme = createTheme(
+        {
+            palette: {
+                primary: { main: '#1976d2' }
+            }
+        },
+        ptBR,
+        corePtBr
+    );
+
+    const TitleCard = (
+        <Grid container>
+            <Grid item xs={12} sm={12} md={8} lg={8} xl={9} sx={{ pt: 1 }}>
+                Taxas de impostos
+            </Grid>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={3} sx={{ textAlign: 'right' }}>
+                <Fab
+                    color="primary"
+                    aria-label="add"
+                    size="small"
+                    title="Adicionar nova taxa de imposto"
+                    onClick={() => {
+                        navigate(`/tax`);
+                    }}
+                >
+                    <AddIcon />
+                </Fab>
+            </Grid>
+        </Grid>
+    );
 
     return (
-        <MainCard title="Taxas de impostos">
-            <div style={{ height: 'calc(100vh - 252px)', width: '100%', position: 'relative' }}>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
-                    localeText={ptBR.props.MuiDataGrid.localeText}
-                />
-            </div>
-        </MainCard>
+        <>
+            <MainCard title={TitleCard}>
+                <div style={{ height: 'calc(100vh - 270px)', width: '100%', position: 'relative' }}>
+                    <ThemeProvider theme={theme}>
+                        <DataGrid rows={rows} columns={columns} pageSize={10} rowsPerPageOptions={[10]} />
+                    </ThemeProvider>
+                </div>
+            </MainCard>
+        </>
     );
 };
 

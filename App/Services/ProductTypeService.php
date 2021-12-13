@@ -33,20 +33,20 @@ class ProductTypeService implements HttpRequestService
 
     /**
      * Insert a new product type
-     * @return string
+     * @return array
      * @throws Exception
      */
-    public function post(): string
+    public function post(): array
     {
         return ProductTypes::insert($_POST);
     }
 
     /**
      * Update product type
-     * @return string
+     * @return array
      * @throws Exception
      */
-    public function put(): string
+    public function put(): array
     {
         parse_str(file_get_contents('php://input'), $_PUT);
         return ProductTypes::update($_PUT);
@@ -54,10 +54,10 @@ class ProductTypeService implements HttpRequestService
 
     /**
      * Delete product type
-     * @return string
+     * @return array
      * @throws Exception
      */
-    public function delete(): string
+    public function delete(): array
     {
         parse_str(file_get_contents('php://input'), $_DELETE);
         return ProductTypes::delete($_DELETE);

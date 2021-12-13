@@ -40,32 +40,50 @@ class TaxService implements HttpRequestService
 
             return array();
         } else {
-            return Products::getAll();
+            return Tax::getAll();
         }
     }
 
     /**
-     * Insert a new sale
+     * Insert a new tax
      *
-     * @return string
+     * @return array
      * @throws Exception
      */
-    public function post(): string
+    public function post(): array
     {
-        return Sales::insert($_POST);
+        if (isset($_POST['value'])) {
+            $_POST['value'] = floatval($_POST['value']);
+        }
+        return Tax::insert($_POST);
     }
 
-    /** @throws Exception */
-    public function put(): string
+    /**
+     * Update tax
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function put(): array
     {
         parse_str(file_get_contents('php://input'), $_PUT);
-        return ProductTypes::update($_PUT);
+
+        if (isset($_PUT['value'])) {
+            $_PUT['value'] = floatval($_PUT['value']);
+        }
+        return Tax::update($_PUT);
     }
 
-    /** @throws Exception */
-    public function delete(): string
+
+    /**
+     * Delete tax
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function delete(): array
     {
         parse_str(file_get_contents('php://input'), $_DELETE);
-        return ProductTypes::delete($_DELETE);
+        return Tax::delete($_DELETE);
     }
 }

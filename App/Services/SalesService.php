@@ -43,10 +43,10 @@ class SalesService implements HttpRequestService
     /**
      * Insert a new sale
      *
-     * @return string
+     * @return array
      * @throws Exception
      */
-    public function post(): string
+    public function post(): array
     {
 
         $_POST['date'] = Formatter::gi()->localToUtc(date('Y-m-d H:i:s'));
@@ -54,13 +54,13 @@ class SalesService implements HttpRequestService
     }
 
     /** @throws Exception */
-    public function put(): string
+    public function put(): array
     {
         throw new Exception('Não foi possível concluir a requisição');
     }
 
     /** @throws Exception */
-    public function delete(): string
+    public function delete(): array
     {
         throw new Exception('Não foi possível concluir a requisição');
     }

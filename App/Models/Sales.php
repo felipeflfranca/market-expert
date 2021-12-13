@@ -67,10 +67,10 @@ class Sales
     /**
      * Insert a new sale
      * @param array $sale sale data
-     * @return string
+     * @return array
      * @throws Exception
      */
-    public static function insert(array $sale): string
+    public static function insert(array $sale): array
     {
         $builder = QueryBuilder::gi()->insertBuilder($sale, self::$table, array(
             'date' => 'date',
@@ -80,7 +80,12 @@ class Sales
         $conn = new Database();
         $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
-        if ($result->rowCount() > 0) return 'Venda registrada com sucesso!'; else {
+        if ($result->rowCount() > 0) {
+            return array(
+                'message' => 'Venda registrada com sucesso!',
+                'id' => $conn->lastInsertId()
+            );
+        } else {
             throw new Exception("Falha ao registrar a venda");
         }
     }

@@ -60,7 +60,7 @@ class Tax
             ':id' => $id
         ));
 
-        if ($result->rowCount() > 0) return $result->fetchAll(PDO::FETCH_ASSOC); else {
+        if ($result->rowCount() > 0) return $result->fetch(PDO::FETCH_ASSOC); else {
             throw new Exception("Taxa de imposto não encontrada");
         }
     }
@@ -68,10 +68,10 @@ class Tax
     /**
      * Enter a new tax
      * @param array $tax tax data
-     * @return string
+     * @return array
      * @throws Exception
      */
-    public static function insert(array $tax): string
+    public static function insert(array $tax): array
     {
         $builder = QueryBuilder::gi()->insertBuilder($tax, self::$table, array(
             'name' => 'name',
@@ -81,7 +81,12 @@ class Tax
         $conn = new Database();
         $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
-        if ($result->rowCount() > 0) return 'Taxa de imposto cadastrada com sucesso!'; else {
+        if ($result->rowCount() > 0) {
+            return array(
+                'message' => 'Taxa de imposto cadastrada com sucesso!',
+                'id' => $conn->lastInsertId()
+            );
+        }else {
             throw new Exception("Falha ao cadastrar a taxa de imposto");
         }
     }
@@ -89,10 +94,10 @@ class Tax
     /**
      * Update tax
      * @param array $tax tax data
-     * @return string
+     * @return array
      * @throws Exception
      */
-    public static function update(array $tax): string
+    public static function update(array $tax): array
     {
         $builder = QueryBuilder::gi()->updateBuilder($tax, self::$table, array(
             'name' => 'name',
@@ -102,7 +107,12 @@ class Tax
         $conn = new Database();
         $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
-        if ($result->rowCount() > 0) return 'Taxa de imposto atualizada com sucesso!'; else {
+        if ($result->rowCount() > 0) {
+            return array (
+                'message' => 'Taxa de imposto atualizada com sucesso!',
+                'id' => $tax['id']
+            );
+        } else {
             throw new Exception("Falha ao alterar a taxa de imposto");
         }
     }
@@ -110,17 +120,21 @@ class Tax
     /**
      * Delete tax
      * @param array $tax tax data
-     * @return string
+     * @return array
      * @throws Exception
      */
-    public static function delete(array $tax): string
+    public static function delete(array $tax): array
     {
         $builder = QueryBuilder::gi()->deleteBuilder($tax, self::$table, array( 'id' => 'id'));
 
         $conn = new Database();
         $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
-        if ($result->rowCount() > 0) return 'Taxa de imposto deletada com sucesso!'; else {
+        if ($result->rowCount() > 0) {
+            return array (
+                'message' => 'Taxa de imposto deletada com sucesso!'
+            );
+        } else {
             throw new Exception("Falha ao deletar a taxa de imposto");
         }
     }

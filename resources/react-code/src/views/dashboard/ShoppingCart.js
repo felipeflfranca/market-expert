@@ -84,7 +84,7 @@ const ShoppingCart = ({ products, dispatch }) => {
 
                 Swal.fire({
                     icon: data.status,
-                    title: data.data,
+                    title: data.data.message,
                     showConfirmButton: false,
                     timer: 1800
                 });
