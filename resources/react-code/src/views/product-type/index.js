@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 const ProductType = () => {
     const { id } = useParams();
     const [data, setData] = useState([]);
+    const [taxes, setTaxes] = useState([]);
 
     const navigate = useNavigate();
 
@@ -26,7 +27,10 @@ const ProductType = () => {
             .then((response) => response.text())
             .then((result) => {
                 const data = JSON.parse(result);
+                const taxes = JSON.parse(data.data.taxes);
+
                 setData(data.data);
+                setTaxes(taxes);
             })
             .catch((error) => console.log('error', error));
     }
@@ -127,7 +131,7 @@ const ProductType = () => {
             <MainCard title={TitleCard}>
                 <div style={{ height: 'calc(100vh - 305px)', width: '100%', position: 'relative', borderBottom: '1px solid #cecece' }}>
                     <Grid container key="tax" spacing={{ xs: 2, sm: 0, md: 2, lg: 0 }} columns={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
-                        <Grid item xs={12} sm={12} md={8} lg={8} xl={9}>
+                        <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
                             <TextField
                                 fullWidth
                                 label="Nome"
@@ -139,23 +143,24 @@ const ProductType = () => {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={12} md={4} lg={4} xl={3}>
-                            <FormControl sx={{ m: 1, width: 300 }}>
-                                <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+                        <Grid item xs={12} sm={12} md={6} lg={8} xl={8}>
+                            <FormControl style={{ width: '100%' }}>
+                                <InputLabel id="demo-multiple-checkbox-label">Impostos</InputLabel>
                                 <Select
+                                    style={{ width: '100%' }}
                                     labelId="demo-multiple-checkbox-label"
                                     id="demo-multiple-checkbox"
                                     multiple
                                     value={personName}
                                     onChange={handleChange}
-                                    input={<OutlinedInput label="Tag" />}
+                                    input={<OutlinedInput label="Impostos" />}
                                     renderValue={(selected) => selected.join(', ')}
                                     MenuProps={MenuProps}
                                 >
-                                    {names.map((name) => (
-                                        <MenuItem key={name} value={name}>
-                                            <Checkbox checked={personName.indexOf(name) > -1} />
-                                            <ListItemText primary={name} />
+                                    {taxes.map((name, value) => (
+                                        <MenuItem key={value} value={value}>
+                                            <Checkbox checked={personName.indexOf(value) > -1} />
+                                            <ListItemText primary={value} />
                                         </MenuItem>
                                     ))}
                                 </Select>

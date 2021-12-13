@@ -72,6 +72,21 @@ class Database
         return $stmt;
     }
 
+    public function beginTransaction()
+    {
+        $this->conn->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->conn->commit();
+    }
+
+    public function rollBack()
+    {
+        $this->conn->rollBack();
+    }
+
     public function lastInsertId()
     {
         return $this->conn->lastInsertId();

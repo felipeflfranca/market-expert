@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Helpers\DataValidator\Validator;
 use App\Interfaces\HttpRequestService;
 use App\Models\ProductTypes;
+use App\Models\Tax;
 use Exception;
 
 class ProductTypeService implements HttpRequestService
@@ -38,6 +39,12 @@ class ProductTypeService implements HttpRequestService
      */
     public function post(): array
     {
+        $validationMessages = [
+            'name' => 'Você precisa informar o nome do tipo de produto',
+            'taxes' => 'Você precisa informar a taxa de imposto'
+        ];
+
+        Validator::gi()->checkRequiredFieldsExist($_POST, $validationMessages);
         return ProductTypes::insert($_POST);
     }
 

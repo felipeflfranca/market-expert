@@ -19,7 +19,7 @@ class ProductTypes
      */
     public static function getAll(): array
     {
-        $query = "SELECT pt.id, pt.name, json_agg(json_build_object(taxes.name, taxes.value)) AS taxes FROM " . self::$table . " pt ".
+        $query = "SELECT pt.id, pt.name, json_agg(json_build_object(taxes.id, taxes.name||'('||taxes.value||'%)')) AS taxes FROM " . self::$table . " pt ".
             "INNER JOIN product_types_taxes ON product_types_taxes.product_type_id = pt.id ".
             "INNER JOIN taxes ON taxes.id = product_types_taxes.tax_id ".
             "GROUP BY pt.id, pt.name ";
@@ -40,7 +40,7 @@ class ProductTypes
      */
     public static function getById(int $id): array
     {
-        $query = "SELECT pt.id, pt.name, json_agg(json_build_object(taxes.name, taxes.value)) AS taxes FROM " . self::$table . " pt ".
+        $query = "SELECT pt.id, pt.name, json_agg(json_build_object(taxes.id, taxes.name||'('||taxes.value||'%)')) AS taxes FROM " . self::$table . " pt ".
             "INNER JOIN product_types_taxes ON product_types_taxes.product_type_id = pt.id ".
             "INNER JOIN taxes ON taxes.id = product_types_taxes.tax_id ".
             "WHERE pt.  id = :id  ".
@@ -64,20 +64,40 @@ class ProductTypes
      */
     public static function insert(array $productType): array
     {
-        $builder = QueryBuilder::gi()->insertBuilder($productType, self::$table, array(
-            'name' => 'name',
-            'taxes' => 'taxes'
-        ));
-
         $conn = new Database();
-        $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
-        if ($result->rowCount() > 0) {
-            return array(
-                'message' => 'Tipo de produto cadastrado com sucesso!',
-                'id' => $conn->lastInsertId()
-            );
-        } else {
+        $conn->beginTransaction();
+        try {
+            $builder = QueryBuilder::gi()->insertBuilder($productType, self::$table, array(
+                'name' => 'name'
+            ));
+
+            $result = $conn->executeQuery($builder->query(), $builder->parameters());
+
+            $productTypeId = $conn->lastInsertId();
+
+            $taxes = preg_replace('/\s+/', '', $productType['taxes']);
+            $taxes = explode(',', $taxes);
+            foreach ($taxes as $tax) {
+                // Link tax rates to product type
+                $result = $conn->executeQuery("INSERT INTO product_types_taxes (product_type_id, tax_id) VALUES (:product_id, :tax_id)", array(
+                    ':product_id' => intval($productTypeId),
+                    ':tax_id' => $tax
+                ));
+            }
+
+            if ($result->rowCount() > 0) {
+                $conn->commit();
+                return array(
+                    'message' => 'Tipo de produto cadastrado com sucesso!',
+                    'id' => $productTypeId
+                );
+            } else {
+                $conn->rollBack();
+                throw new Exception("Falha ao alterar o tipo de produto");
+            }
+        } catch (Exception $e) {
+            $conn->rollBack();
             throw new Exception("Falha ao cadastrar o tipo de produto");
         }
     }
@@ -90,20 +110,45 @@ class ProductTypes
      */
     public static function update(array $productType): array
     {
-        $builder = QueryBuilder::gi()->updateBuilder($productType, self::$table, array(
-            'name' => 'name',
-            'taxes' => 'taxes'
-        ), array( 'id' => 'id'));
-
         $conn = new Database();
-        $result = $conn->executeQuery($builder->query(), $builder->parameters());
 
-        if ($result->rowCount() > 0) {
-            return array(
-                'message' => 'Tipo de produto alterado com sucesso!',
-                'id' => $productType['id']
-            );
-        } else {
+        $conn->beginTransaction();
+        try {
+            $builder = QueryBuilder::gi()->updateBuilder($productType, self::$table, array(
+                'name' => 'name'
+            ), array( 'id' => 'id'));
+
+            $productTypeId = $productType['id'];
+
+            $result = $conn->executeQuery($builder->query(), $builder->parameters());
+
+            // Delete tax rates to product type
+            $conn->executeQuery("DELETE FROM product_types_taxes WHERE product_type_id = :product_id", array(
+                ':product_id' => intval($productTypeId)
+            ));
+
+            $taxes = preg_replace('/\s+/', '', $productType['taxes']);
+            $taxes = explode(',', $taxes);
+            foreach ($taxes as $tax) {
+                // Link tax rates to product type
+                $result = $conn->executeQuery("INSERT INTO product_types_taxes (product_type_id, tax_id) VALUES (:product_id, :tax_id)", array(
+                    ':product_id' => intval($productTypeId),
+                    ':tax_id' => $tax
+                ));
+            }
+
+            if ($result->rowCount() > 0) {
+                $conn->commit();
+                return array(
+                    'message' => 'Tipo de produto alterado com sucesso!',
+                    'id' => $productTypeId
+                );
+            } else {
+                $conn->rollBack();
+                throw new Exception("Falha ao alterar o tipo de produto");
+            }
+        } catch (Exception $e) {
+            $conn->rollBack();
             throw new Exception("Falha ao alterar o tipo de produto");
         }
     }
