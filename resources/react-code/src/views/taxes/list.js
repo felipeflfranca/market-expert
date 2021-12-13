@@ -60,7 +60,9 @@ const Taxes = () => {
                 .then((response) => response.text())
                 .then((result) => {
                     const data = JSON.parse(result);
-                    setRows(data.data);
+                    if (Array.isArray(data)) {
+                        setRows(data.data);
+                    }
                 })
                 .catch((error) => console.log('error', error));
         }
