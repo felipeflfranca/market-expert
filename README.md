@@ -7,7 +7,7 @@ This is a demonstration based on the concept of a market program with REST API b
 Make sure you have [PHP 7.4](https://www.php.net/downloads.php) , [Composer](https://getcomposer.org/download/) and [PostgreSQL](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) installed and **pdo_pgsql** extension enabled into **php.ini** file.\
 **Note**: In development, version 14.1 of PostgreSQL was used.
 
-Make sure you have set your region's timezone correctly in the php.ini file
+Make sure you have set your region's timezone correctly in the **php.ini** file.
 
 ## Test database copy
 
