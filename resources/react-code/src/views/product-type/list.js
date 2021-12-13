@@ -53,7 +53,7 @@ const ProductTypes = () => {
                 .then((response) => response.text())
                 .then((result) => {
                     const data = JSON.parse(result);
-                    if (Array.isArray(data)) {
+                    if (Array.isArray(data.data)) {
                         setRows(data.data);
                     }
                 })
