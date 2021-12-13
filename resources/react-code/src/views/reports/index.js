@@ -19,7 +19,9 @@ const Report = () => {
                 .then((response) => response.text())
                 .then((result) => {
                     const data = JSON.parse(result);
-                    setSales(data.data);
+                    if (Array.isArray(data.data)) {
+                        setSales(data.data);
+                    }
                 })
                 .catch((error) => console.log('error', error));
         }
