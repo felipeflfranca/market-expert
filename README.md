@@ -33,7 +33,6 @@ Restore from dump (backup) using the following command:\
 ```
 
 ## Database connection
-**If you want to change the database connection data**\
 Open the **Database.php** file in the **APP/Config** folder and change the connection values according to your need:
 ```
     private string $dbName = 'marketexpert';
