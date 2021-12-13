@@ -4,8 +4,8 @@ const config = {
     defaultPath: '',
     fontFamily: `'Roboto', sans-serif`,
     borderRadius: 12,
-    host: 'localhost',
-    port: 8080
+    host: window.location.hostname,
+    port: window.location.port
 };
 
 export default config;
